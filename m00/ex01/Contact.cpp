@@ -1,11 +1,4 @@
-class Contact
-{
-private:
-    /* data */
-public:
-    Contact(/* args */);
-    ~Contact();
-};
+#include "Contact.hpp"
 
 Contact::Contact(/* args */)
 {

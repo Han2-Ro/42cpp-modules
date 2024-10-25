@@ -1,14 +1,10 @@
-class PhoneBook
-{
-private:
-    /* data */
-public:
-    PhoneBook(/* args */);
-    ~PhoneBook();
-};
+#include "Contact.hpp"
+#include "PhoneBook.hpp"
+#include "iostream"
 
-PhoneBook::PhoneBook(/* args */)
+PhoneBook::PhoneBook()
 {
+    std::cout << "new phonebook!!!" << std::endl;
 }
 
 PhoneBook::~PhoneBook()
