@@ -1,3 +1,6 @@
+#ifndef CONTACT_HPP
+#define CONTACT_HPP
+
 class Contact
 {
 private:
@@ -8,6 +11,11 @@ private:
     char *darkest_secret;
 
 public:
-    Contact(/* args */);
+    Contact();
+    Contact(char*, char*, char*, char*, char*);
     ~Contact();
+    void display();
+    void display_header();
 };
+
+#endif
