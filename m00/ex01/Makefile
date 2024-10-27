@@ -1,4 +1,4 @@
-CXX = c++
+CXX = c++ -g
 # CXXFLAGS = -std=c++98 -Wall -Wextra -Werror
 NAME = phonebook
 SRCS = Contact.cpp PhoneBook.cpp main.cpp
@@ -18,4 +18,6 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 
-.PHONY: all clean fclean
+re: fclean all
+
+.PHONY: all clean fclean re

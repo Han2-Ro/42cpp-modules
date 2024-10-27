@@ -9,11 +9,20 @@ PhoneBook::PhoneBook()
 
 PhoneBook::~PhoneBook()
 {
+    this->contacts[0]->~Contact();
 }
 
-int PhoneBook::add() {
+int PhoneBook::add()
+{
     this->contacts[index] = new Contact("john", "johnson", "johnny", "+123456", "I like tailor swift");
+    this->contacts[index]->display_short();
     this->contacts[index]->display();
     this->index++;
+    return 0;
+}
+
+int PhoneBook::search()
+{
+    std::cout << "Searching..." << std::endl;
     return 0;
 }

@@ -15,7 +15,7 @@ public:
     Contact(char*, char*, char*, char*, char*);
     ~Contact();
     void display();
-    void display_header();
+    void display_short();
 };
 
 #endif

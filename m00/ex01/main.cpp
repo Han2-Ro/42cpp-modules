@@ -1,8 +1,26 @@
 #include "PhoneBook.hpp"
+#include <string>
+#include <iostream>
 
-int main(int argc, char const *argv[])
+int main()
 {
     PhoneBook phonebook;
-    
+    std::string line;
+    while (true)
+    {
+        std::getline(std::cin, line);
+        if (line == "ADD")
+        {
+            phonebook.add();
+        }
+        else if (line == "SEARCH")
+        {
+            phonebook.search();
+        }
+        else if (line == "EXIT")
+        {
+            break;
+        }
+    }
     return 0;
 }
