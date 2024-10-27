@@ -1,18 +1,20 @@
 #ifndef CONTACT_HPP
 #define CONTACT_HPP
 
+#include <string>
+
 class Contact
 {
 private:
-    char *first_name;
-    char *last_name;
-    char *nickname;
-    char *phone_number;
-    char *darkest_secret;
+    std::string first_name;
+    std::string last_name;
+    std::string nickname;
+    std::string phone_number;
+    std::string darkest_secret;
 
 public:
     Contact();
-    Contact(char*, char*, char*, char*, char*);
+    Contact(std::string, std::string, std::string, std::string, std::string);
     ~Contact();
     void display();
     void display_short();

@@ -5,9 +5,26 @@
 
 Contact::Contact()
 {
+    std::string line;
+    std::cout << "New Contact. Input info:" << std::endl;
+    std::cout << "First Name:";
+    std::getline(std::cin, line);
+    this->first_name = line;
+    std::cout << "Last Name:";
+    std::getline(std::cin, line);
+    this->last_name = line;
+    std::cout << "Nickname:";
+    std::getline(std::cin, line);
+    this->nickname = line;
+    std::cout << "Phone Number:";
+    std::getline(std::cin, line);
+    this->phone_number = line;
+    std::cout << "Darkest Secret:";
+    std::getline(std::cin, line);
+    this->darkest_secret = line;
 }
 
-Contact::Contact(char *first_name, char *last_name, char *nickname, char *number, char *darkest_sceret)
+Contact::Contact(std::string first_name, std::string last_name, std::string nickname, std::string number, std::string darkest_sceret)
 {
     this->first_name = first_name;
     this->last_name = last_name;
@@ -20,9 +37,9 @@ Contact::~Contact()
 {
 }
 
-void put_field(char *label, char *value)
+void put_field(std::string label, std::string value)
 {
-    std::cout << std::left << std::setw(16) << label << value << "." << std::endl;
+    std::cout << std::left << std::setw(16) << label << value << std::endl;
 }
 
 std::string trunc(std::string str)
