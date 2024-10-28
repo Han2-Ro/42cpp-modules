@@ -8,6 +8,7 @@ int main()
     std::string line;
     while (true)
     {
+        std::cout << "Type Command:" << std::endl;
         std::getline(std::cin, line);
         if (line == "ADD")
         {

@@ -6,8 +6,10 @@
 class PhoneBook
 {
 private:
-    Contact *contacts[8];
+    Contact contacts[8];
     int index = 0;
+	bool is_full = false;
+    bool valid_index(int i);
 
 public:
     PhoneBook();

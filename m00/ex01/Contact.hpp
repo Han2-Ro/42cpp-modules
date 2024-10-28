@@ -18,6 +18,7 @@ public:
     ~Contact();
     void display();
     void display_short();
+    void set_values();
 };
 
 #endif
