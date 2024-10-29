@@ -6,12 +6,10 @@ int main()
 {
     PhoneBook phonebook;
     std::string line;
-    while (line != "EXIT" && !std::cin.eof())
+    while (line != "EXIT" /*&& !std::cin.eof()*/)
     {
 		std::cin.clear();
-        std::cout << "Type Command:" << std::endl;
         std::getline(std::cin, line);
-		std::cout << "typed:" << line << std::endl;
         if (line == "ADD")
         {
             phonebook.add();
@@ -19,6 +17,10 @@ int main()
         else if (line == "SEARCH")
         {
             phonebook.search();
+        }
+        if (std::cin.eof()) {
+            std::cout << "eof in main" << std::endl;
+            std::cin.clear();
         }
     }
     return 0;
