@@ -3,12 +3,14 @@
 
 #include "Contact.hpp"
 
+#define SIZE 8
+
 class PhoneBook
 {
 private:
-    Contact contacts[8];
-    int index = 0;
-	bool is_full = false;
+    Contact contacts[SIZE];
+    int index;
+	bool is_full;
     bool valid_index(int i);
 
 public:

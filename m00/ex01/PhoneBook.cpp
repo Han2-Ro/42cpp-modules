@@ -2,9 +2,12 @@
 #include "PhoneBook.hpp"
 #include <iostream>
 #include <ostream>
+#include <string>
 
 PhoneBook::PhoneBook()
 {
+    this->index = 0;
+	this->is_full = false;
     std::cout << "Welcome to your shitty new phonbook!" << std::endl;
 }
 
@@ -13,11 +16,28 @@ PhoneBook::~PhoneBook()
     std::cout << "Bye!" << std::endl;
 }
 
+bool not_empty(std::string str) {
+		return str.length() > 0;
+}
+
+std::string get_input(std::string prompt, bool (*validate)(std::string)) {
+    std::string input;    
+		 
+    std::cout << prompt;
+	for (int i = 0; i < 3; i++) {
+		std::getline(std::cin, input);
+		if (validate(input)) {
+				return input;
+		}
+    }
+	return NULL;
+}
+
 int PhoneBook::add()
 {
     this->contacts[index].set_values();
     this->index++;
-    if (this->index >= 8) {
+    if (this->index >= SIZE) {
         this->index = 0;
         this->is_full = true;
     }
@@ -45,6 +65,6 @@ int PhoneBook::search()
 }
 
 bool PhoneBook::valid_index(int index) {
-    return index >= 0 && (!this->is_full && index < this->index) || (this->is_full && index < 8);
+    return index >= 0 && ((!this->is_full && index < this->index) || (this->is_full && index < 8));
 }
 
