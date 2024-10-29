@@ -17,7 +17,11 @@ PhoneBook::~PhoneBook()
 }
 
 bool not_empty(std::string str) {
-		return str.length() > 0;
+		if (str.length() > 0) {
+				return true;
+		}
+		std::cout << "Field can't be empty" << std::endl;
+		return false;
 }
 
 std::string get_input(std::string prompt, bool (*validate)(std::string)) {
@@ -35,7 +39,7 @@ std::string get_input(std::string prompt, bool (*validate)(std::string)) {
 
 int PhoneBook::add()
 {
-    this->contacts[index].set_values();
+		std::string first_name = get_input("First Name: ", not_empty);
     this->index++;
     if (this->index >= SIZE) {
         this->index = 0;
