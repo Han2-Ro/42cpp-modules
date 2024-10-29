@@ -16,8 +16,6 @@ PhoneBook::~PhoneBook()
 int PhoneBook::add()
 {
     this->contacts[index].set_values();
-    this->contacts[index].display_short();
-    this->contacts[index].display();
     this->index++;
     if (this->index >= 8) {
         this->index = 0;

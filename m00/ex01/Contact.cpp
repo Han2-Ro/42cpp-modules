@@ -55,7 +55,9 @@ void Contact::set_values() {
 }
 
 void Contact::display_short() {
-    std::cout << trunc(this->first_name) << "|" << trunc(this->last_name) << "|" << trunc(this->nickname) << std::endl;
+    std::cout << std::setw(10) << trunc(this->first_name)
+			<< "|" << std::setw(10) << trunc(this->last_name)
+			<< "|" << std::setw(10) << trunc(this->nickname) << std::endl;
 }
 
 void Contact::display()
