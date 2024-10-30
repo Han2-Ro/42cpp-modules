@@ -65,7 +65,7 @@ void Contact::display()
     put_field("First Name:", this->first_name);
     put_field("Last Name:", this->last_name);
     put_field("Nickname:", this->nickname);
-    put_field("Phone Number ☎️:", this->phone_number);
+    put_field("Phone Number:", this->phone_number);
     put_field("Darkest Secret:", this->darkest_secret);
 }
 

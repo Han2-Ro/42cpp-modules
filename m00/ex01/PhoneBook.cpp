@@ -89,7 +89,10 @@ bool validate_index(std::string str) {
 
 int PhoneBook::search()
 {
-    std::cout << "Searching..." << std::endl;
+    if (!this->is_full && this->index == 0) {
+        std::cout << "\033[31m" << "There are no contacts yet" << "\033[0m" << std::endl;
+        return 1;
+    }
     std::cout << "\033[1m" << std::setw(10) << "Index"
 			<< "|" << std::setw(10) << "First Name"
 			<< "|" << std::setw(10) << "Last Name"
@@ -102,6 +105,12 @@ int PhoneBook::search()
     std::cout << "Select an Index: ";
     int index;
     if (!(std::cin >> index)) {
+        if (std::cin.eof()) {
+            std::cin.clear();
+            clearerr(stdin);
+            std::cout << "\033[31m" << "Canceled" << "\033[0m" << std::endl;
+            return 1;
+        }
         std::cin.clear();
         std::cout << "\033[31m" << "Not a number" << "\033[0m" << std::endl;
         return 1;
