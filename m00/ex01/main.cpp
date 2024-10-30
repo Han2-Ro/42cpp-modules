@@ -13,10 +13,12 @@ int main()
         if (line == "ADD")
         {
             phonebook.add();
+            std::cout << std::endl;
         }
         else if (line == "SEARCH")
         {
             phonebook.search();
+            std::cout << std::endl;
         }
     }
     return 0;

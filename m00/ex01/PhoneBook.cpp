@@ -2,6 +2,7 @@
 #include "PhoneBook.hpp"
 #include <cctype>
 #include <cstdio>
+#include <iomanip>
 #include <iostream>
 #include <ostream>
 #include <string>
@@ -66,6 +67,7 @@ int PhoneBook::add()
         this->index = 0;
         this->is_full = true;
     }
+    std::cout << "\033[32m" << "Contact added :)" << "\033[0m" << std::endl;
     return 0;
 }
 
@@ -88,14 +90,22 @@ bool validate_index(std::string str) {
 int PhoneBook::search()
 {
     std::cout << "Searching..." << std::endl;
+    std::cout << "\033[1m" << std::setw(10) << "Index"
+			<< "|" << std::setw(10) << "First Name"
+			<< "|" << std::setw(10) << "Last Name"
+			<< "|" << std::setw(10) << "Nickname" << "\033[0m" << std::endl;
     for (int i = 0; this->valid_index(i); i++)
     {
-        std::cout << i << "|";
+        std::cout << std::setw(10) << i << "|";
         this->contacts[i].display_short();
     }
-    std::string input = get_input("Index:", validate_index);
-    int index = strtol(input.c_str(), NULL, 10);
-    std::cin >> index;
+    std::cout << "Select an Index: ";
+    int index;
+    if (!(std::cin >> index)) {
+        std::cin.clear();
+        std::cout << "\033[31m" << "Not a number" << "\033[0m" << std::endl;
+        return 1;
+    }
     if (!this->valid_index(index)) {
         std::cout << "\033[31m" << "Index out of range" << "\033[0m" << std::endl;
         return 1;
