@@ -1,5 +1,6 @@
 #include "Contact.hpp"
 #include "PhoneBook.hpp"
+#include <cstdio>
 #include <iostream>
 #include <ostream>
 #include <string>
@@ -32,16 +33,15 @@ std::string get_input(std::string prompt, bool (*validate)(std::string)) {
         std::getline(std::cin, input);
         if (std::cin.eof()) {
             std::cin.clear();
-            std::cin.ignore(1000, '\n');
-            std::cout << "eof in get_input" << std::endl;
+            std::clearerr(stdin);
             break;
         }
         if (validate(input)) {
             return input;
         }
-        std::cout << "\033[31m" << "U got " << i << " tries left." << "\033[0m" << std::endl;
+        std::cout << "\033[31m" << "You got " << i << " tries left." << "\033[0m" << std::endl;
     }
-    std::cout << "\033[31m" << "Aborted" << "\033[0m" << std::endl;
+    std::cout << "\033[31m" << "Canceled" << "\033[0m" << std::endl;
     return "";
 }
 
