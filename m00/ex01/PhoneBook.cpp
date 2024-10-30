@@ -1,9 +1,11 @@
 #include "Contact.hpp"
 #include "PhoneBook.hpp"
+#include <cctype>
 #include <cstdio>
 #include <iostream>
 #include <ostream>
 #include <string>
+#include <cstdlib>
 
 PhoneBook::PhoneBook()
 {
@@ -67,6 +69,22 @@ int PhoneBook::add()
     return 0;
 }
 
+bool validate_index(std::string str) {
+    if (!not_empty(str)) {return false;}
+    int index;
+    char *endptr;
+    index = std::strtol(str.c_str(), &endptr, 10);
+    if (*endptr != '\0') {
+        std::cout << "\033[31m" << "Not a number" << "\033[0m" << std::endl;
+        return false;
+    }
+    if (index < 0 || index >= SIZE) {
+        std::cout << "\033[31m" << "Index out of range" << "\033[0m" << std::endl;
+        return false;
+    }
+    return true;
+}
+
 int PhoneBook::search()
 {
     std::cout << "Searching..." << std::endl;
@@ -75,12 +93,11 @@ int PhoneBook::search()
         std::cout << i << "|";
         this->contacts[i].display_short();
     }
-    std::cout << "Index:";
-    int index;
+    std::string input = get_input("Index:", validate_index);
+    int index = strtol(input.c_str(), NULL, 10);
     std::cin >> index;
-    if (std::cin.fail() || !this->valid_index(index)) {
-        std::cin.clear();
-        std::cout << "Invalid Index" << std::endl;
+    if (!this->valid_index(index)) {
+        std::cout << "\033[31m" << "Index out of range" << "\033[0m" << std::endl;
         return 1;
     }
     this->contacts[index].display();
