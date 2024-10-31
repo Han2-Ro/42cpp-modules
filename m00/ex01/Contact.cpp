@@ -1,4 +1,5 @@
 #include "Contact.hpp"
+#include <ios>
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -22,7 +23,7 @@ Contact::~Contact()
 
 void put_field(std::string label, std::string value)
 {
-    std::cout << std::left << std::setw(16) << label << value << std::endl;
+    std::cout << std::right << std::setw(16) << label << value << std::endl;
 }
 
 std::string trunc(std::string str)
@@ -34,26 +35,6 @@ std::string trunc(std::string str)
     return str;
 }
 
-void Contact::set_values() {
-    std::string line;
-    std::cout << "New Contact. Input info:" << std::endl;
-    std::cout << "First Name:";
-    std::getline(std::cin, line);
-    this->first_name = line;
-    std::cout << "Last Name:";
-    std::getline(std::cin, line);
-    this->last_name = line;
-    std::cout << "Nickname:";
-    std::getline(std::cin, line);
-    this->nickname = line;
-    std::cout << "Phone Number:";
-    std::getline(std::cin, line);
-    this->phone_number = line;
-    std::cout << "Darkest Secret:";
-    std::getline(std::cin, line);
-    this->darkest_secret = line;
-}
-
 void Contact::display_short() {
     std::cout << std::setw(10) << trunc(this->first_name)
 			<< "|" << std::setw(10) << trunc(this->last_name)
@@ -62,10 +43,12 @@ void Contact::display_short() {
 
 void Contact::display()
 {
-    put_field("First Name:", this->first_name);
-    put_field("Last Name:", this->last_name);
-    put_field("Nickname:", this->nickname);
-    put_field("Phone Number:", this->phone_number);
-    put_field("Darkest Secret:", this->darkest_secret);
+    std::cout << std::endl << "----------------------------" << std::endl;
+    put_field("First Name: ", this->first_name);
+    put_field("Last Name: ", this->last_name);
+    put_field("Nickname: ", this->nickname);
+    put_field("Phone Number: ", this->phone_number);
+    put_field("Darkest Secret: ", this->darkest_secret);
+    std::cout << "----------------------------" << std::endl;
 }
 

@@ -78,6 +78,7 @@ std::string get_input(std::string prompt, bool (*validate)(std::string)) {
 
 int PhoneBook::add()
 {
+    std::cout << "Adding Contact. Fill in values:" << std::endl;
     std::string first_name = get_input("First Name: ", not_empty);
     if (first_name.length() == 0) {return 1;}
     std::string last_name = get_input("Last Name: ", not_empty);
@@ -117,7 +118,6 @@ int PhoneBook::search()
     std::cout << "Select an Index: ";
     int index;
     if (!(std::cin >> index)) {
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         if (std::cin.eof()) {
             std::cin.clear();
             clearerr(stdin);
@@ -125,6 +125,7 @@ int PhoneBook::search()
             return 1;
         }
         std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cout << "\033[31m" << "Not a number" << "\033[0m" << std::endl;
         return 1;
     }
