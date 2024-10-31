@@ -3,6 +3,7 @@
 #include <cctype>
 #include <cstdio>
 #include <iomanip>
+#include <ios>
 #include <iostream>
 #include <ostream>
 #include <string>
@@ -103,7 +104,7 @@ int PhoneBook::search()
         std::cout << "\033[31m" << "There are no contacts yet" << "\033[0m" << std::endl;
         return 1;
     }
-    std::cout << "\033[1m" << std::setw(10) << "Index"
+    std::cout << std::right << "\033[1m" << std::setw(10) << "Index"
 			<< "|" << std::setw(10) << "First Name"
 			<< "|" << std::setw(10) << "Last Name"
 			<< "|" << std::setw(10) << "Nickname" << "\033[0m" << std::endl;
