@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <ios>
 #include <iostream>
+#include <limits>
 #include <ostream>
 #include <string>
 #include <cstdlib>
@@ -116,6 +117,7 @@ int PhoneBook::search()
     std::cout << "Select an Index: ";
     int index;
     if (!(std::cin >> index)) {
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         if (std::cin.eof()) {
             std::cin.clear();
             clearerr(stdin);
@@ -126,6 +128,7 @@ int PhoneBook::search()
         std::cout << "\033[31m" << "Not a number" << "\033[0m" << std::endl;
         return 1;
     }
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     if (!this->valid_index(index)) {
         std::cout << "\033[31m" << "Index out of range" << "\033[0m" << std::endl;
         return 1;

@@ -9,7 +9,9 @@ int main()
     while (line != "EXIT" && !std::cin.eof())
     {
 		std::cin.clear();
+        std::cout << "Type ADD, SEARCH or EXIT:" << std::endl;
         std::getline(std::cin, line);
+        std::cout << "\033[2J\033[1;1H";
         if (line == "ADD")
         {
             phonebook.add();
@@ -23,3 +25,4 @@ int main()
     }
     return 0;
 }
+
