@@ -28,6 +28,32 @@ bool not_empty(std::string str) {
     return false;
 }
 
+bool validate_phonenbr(std::string str) {
+    if (!not_empty(str)) {return false;}
+    int ignore = 0;
+    if (str[0] == '+')
+        ignore = 1;
+    else if (str.length() >= 2 && str[0] == '0' && str[1] == '0')
+        ignore = 2;
+    if (str.length() - ignore < 6) {
+        std::cout << "\033[31m" << "Number too short (min 6)" << "\033[0m" << std::endl;
+        return false;
+    }
+    if (str.length() - ignore > 15) {
+        std::cout << "\033[31m" << "Number too long (max 15)" << "\033[0m" << std::endl;
+        return false;
+    }
+    std::string::iterator it=str.begin();
+    it += ignore;
+    for ( ; it!=str.end(); ++it) {
+        if (!std::isdigit(*it)) {
+            std::cout << "\033[31m" << "Not a digit: " << *it << "\033[0m" << std::endl;
+            return false;
+        }
+    }
+    return true;
+}
+
 std::string get_input(std::string prompt, bool (*validate)(std::string)) {
     std::string input;    
 
@@ -56,7 +82,7 @@ int PhoneBook::add()
     if (last_name.length() == 0) {return 1;}
     std::string nickname = get_input("Nickname: ", not_empty);
     if (nickname.length() == 0) {return 1;}
-    std::string phone_number = get_input("Phone Number: ", not_empty);
+    std::string phone_number = get_input("Phone Number: ", validate_phonenbr);
     if (phone_number.length() == 0) {return 1;}
     std::string secret = get_input("Darkest Secret: ", not_empty);
     if (secret.length() == 0) {return 1;}
@@ -69,22 +95,6 @@ int PhoneBook::add()
     }
     std::cout << "\033[32m" << "Contact added :)" << "\033[0m" << std::endl;
     return 0;
-}
-
-bool validate_index(std::string str) {
-    if (!not_empty(str)) {return false;}
-    int index;
-    char *endptr;
-    index = std::strtol(str.c_str(), &endptr, 10);
-    if (*endptr != '\0') {
-        std::cout << "\033[31m" << "Not a number" << "\033[0m" << std::endl;
-        return false;
-    }
-    if (index < 0 || index >= SIZE) {
-        std::cout << "\033[31m" << "Index out of range" << "\033[0m" << std::endl;
-        return false;
-    }
-    return true;
 }
 
 int PhoneBook::search()
