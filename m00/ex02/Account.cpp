@@ -90,6 +90,7 @@ void Account::displayStatus() const {
         << ";withdrawals:" << _nbWithdrawals << std::endl;
 }
 
+//TODO: this is only placeholder for diff with subj
 void Account::_displayTimestamp() {
     std::cout << "[19920104_091532] ";
 }
