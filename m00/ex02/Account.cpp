@@ -92,6 +92,11 @@ void Account::displayStatus() const {
 
 //TODO: this is only placeholder for diff with subj
 void Account::_displayTimestamp() {
-    std::cout << "[19920104_091532] ";
+    //std::cout << "[19920104_091532] ";
+    time_t timestamp = time(NULL);
+    struct tm *datetime = std::localtime(&timestamp);
+    char output[50];
+    strftime(output, 50, "[%Y%m%d_%H%M%S] ", datetime);
+    std::cout << output << std::endl;
 }
 
