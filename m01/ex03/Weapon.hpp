@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 
 class Weapon {
@@ -5,7 +6,9 @@ class Weapon {
         std::string type;
 
     public:
+        Weapon(const std::string& type);
+        ~Weapon();
         std::string getType();
-        void setType(std::string& type);
+        void setType(const std::string& type);
 };
 
