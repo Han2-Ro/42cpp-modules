@@ -23,18 +23,16 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    std::cout << "reading file" << std::endl;
     std::stringstream buffer;
     buffer << inFile.rdbuf();
     content = buffer.str();
     inFile.close();
 
-    for(unsigned long i = 0; i < content.length(); i++) {
+    for(unsigned long i = 0; i < content.length(); i += strReplace.length()) {
         i = content.find(strFind, i);
         if (i == std::string::npos) {
             break;
         }
-        std::cout << "found at:" << i << content[i] << std::endl;
         content.erase(i, strFind.length());
         content.insert(i, strReplace);
     }
