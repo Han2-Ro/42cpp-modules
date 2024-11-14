@@ -3,7 +3,6 @@
 #include <string>
 
 Harl::Harl() {
-    std::cout << "dict init" << std::endl;
     this->dict["debug"] = &Harl::debug;
     this->dict["info"] = &Harl::info;
     this->dict["warning"] = &Harl::warning;
@@ -29,6 +28,9 @@ void Harl::error(void) {
 }
 
 void Harl::complain(std::string level) {
-    (this->*dict.at(level))();
+    std::map<std::string, void (Harl::*)()>::iterator it = dict.find(level);
+    if (it != dict.end()) {
+        (this->*it->second)();
+    }
 }
 
