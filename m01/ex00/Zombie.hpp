@@ -2,15 +2,15 @@
 #include <string>
 
 class Zombie {
-    private:
-        std::string name;
+  private:
+    std::string name;
 
-    public:
-        Zombie(const std::string& name);
-        ~Zombie();
+  public:
+    Zombie(const std::string &name);
+    ~Zombie();
 
-        void announce();
-        static Zombie* newZombie(std::string name);
-        static void randomChump(std::string name);
+    void announce();
 };
 
+Zombie *newZombie(std::string name);
+void randomChump(std::string name);

@@ -1,9 +1,8 @@
 #include "Zombie.hpp"
 
 int main() {
-    Zombie* zombie = Zombie::newZombie("heap");
+    Zombie *zombie = newZombie("heap");
     zombie->announce();
     delete zombie;
-    Zombie::randomChump("stack");
+    randomChump("stack");
 }
-
