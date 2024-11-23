@@ -2,14 +2,14 @@
 #include <string>
 
 class Zombie {
-    private:
-        std::string name;
+   private:
+    std::string name;
 
-    public:
-        Zombie();
-        ~Zombie();
+   public:
+    Zombie();
+    Zombie(const std::string& name);
+    ~Zombie();
 
-        void announce();
-        void setName(std::string& name);
+    void announce();
+    void setName(std::string& name);
 };
-
