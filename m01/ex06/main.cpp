@@ -1,11 +1,11 @@
 #include <iostream>
-#include <iterator>
 #include <map>
 #include <string>
+
 #include "Harl.hpp"
 
 int main(int argc, char *argv[]) {
-    Harl harl;
+    Harl        harl;
     std::string str_level;
 
     if (argc != 2) {

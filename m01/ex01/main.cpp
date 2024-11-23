@@ -1,7 +1,7 @@
 #include "Zombie.hpp"
 #include "zombieHord.hpp"
 
-#define SIZE 5
+#define SIZE 999
 
 int main() {
     Zombie* horde = zombieHorde(SIZE, "horde member");

@@ -1,5 +1,5 @@
 CXX = clang++
-CXXFLAGS = -g -std=c++98 -Wall -Wextra -Werror
+CXXFLAGS = -std=c++98 -Wall -Wextra -Werror
 NAME = harlFilter
 SRCS = main.cpp Harl.cpp
 OBJS = $(SRCS:.cpp=.o)

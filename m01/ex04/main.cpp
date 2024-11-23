@@ -8,7 +8,8 @@ int main(int argc, char* argv[]) {
     std::string content;
 
     if (argc != 4) {
-        std::cerr << "Expected three arguments: filename, search string and replace string" << std::endl;
+        std::cerr << "Expected three arguments: filename, search string and replace string"
+                  << std::endl;
         return 1;
     }
 
@@ -28,7 +29,7 @@ int main(int argc, char* argv[]) {
     content = buffer.str();
     inFile.close();
 
-    for(unsigned long i = 0; i < content.length(); i += strReplace.length()) {
+    for (unsigned long i = 0; i < content.length(); i += strReplace.length()) {
         i = content.find(strFind, i);
         if (i == std::string::npos) {
             break;

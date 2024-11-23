@@ -1,10 +1,10 @@
-#include "Weapon.hpp"
-#include "HumanA.hpp"
-#include "HumanB.hpp"
 #include <string>
 
-int main()
-{
+#include "HumanA.hpp"
+#include "HumanB.hpp"
+#include "Weapon.hpp"
+
+int main() {
     {
         Weapon club = Weapon("crude spiked club");
 
@@ -24,4 +24,3 @@ int main()
     }
     return 0;
 }
-
