@@ -1,24 +1,24 @@
-#include "Contact.hpp"
 #include "PhoneBook.hpp"
+
 #include <cctype>
 #include <cstdio>
+#include <cstdlib>
 #include <iomanip>
 #include <ios>
 #include <iostream>
 #include <limits>
 #include <ostream>
 #include <string>
-#include <cstdlib>
 
-PhoneBook::PhoneBook()
-{
+#include "Contact.hpp"
+
+PhoneBook::PhoneBook() {
     this->index = 0;
     this->is_full = false;
     std::cout << "Welcome to your shitty new phonbook!" << std::endl;
 }
 
-PhoneBook::~PhoneBook()
-{
+PhoneBook::~PhoneBook() {
     std::cout << "Bye!" << std::endl;
 }
 
@@ -31,12 +31,15 @@ bool not_empty(std::string str) {
 }
 
 bool validate_phonenbr(std::string str) {
-    if (!not_empty(str)) {return false;}
+    if (!not_empty(str)) {
+        return false;
+    }
     int ignore = 0;
-    if (str[0] == '+')
+    if (str[0] == '+') {
         ignore = 1;
-    else if (str.length() >= 2 && str[0] == '0' && str[1] == '0')
+    } else if (str.length() >= 2 && str[0] == '0' && str[1] == '0') {
         ignore = 2;
+    }
     if (str.length() - ignore < 6) {
         std::cout << "\033[31m" << "Number too short (min 6)" << "\033[0m" << std::endl;
         return false;
@@ -45,9 +48,9 @@ bool validate_phonenbr(std::string str) {
         std::cout << "\033[31m" << "Number too long (max 15)" << "\033[0m" << std::endl;
         return false;
     }
-    std::string::iterator it=str.begin();
+    std::string::iterator it = str.begin();
     it += ignore;
-    for ( ; it!=str.end(); ++it) {
+    for (; it != str.end(); ++it) {
         if (!std::isdigit(*it)) {
             std::cout << "\033[31m" << "Not a digit: " << *it << "\033[0m" << std::endl;
             return false;
@@ -57,9 +60,9 @@ bool validate_phonenbr(std::string str) {
 }
 
 std::string get_input(std::string prompt, bool (*validate)(std::string)) {
-    std::string input;    
+    std::string input;
 
-    for (int i = 2; i >=0; i--) {
+    for (int i = 2; i >= 0; i--) {
         std::cout << prompt;
         std::getline(std::cin, input);
         if (std::cin.eof()) {
@@ -76,19 +79,28 @@ std::string get_input(std::string prompt, bool (*validate)(std::string)) {
     return "";
 }
 
-int PhoneBook::add()
-{
+int PhoneBook::add() {
     std::cout << "Adding Contact. Fill in values:" << std::endl;
     std::string first_name = get_input("First Name: ", not_empty);
-    if (first_name.length() == 0) {return 1;}
+    if (first_name.length() == 0) {
+        return 1;
+    }
     std::string last_name = get_input("Last Name: ", not_empty);
-    if (last_name.length() == 0) {return 1;}
+    if (last_name.length() == 0) {
+        return 1;
+    }
     std::string nickname = get_input("Nickname: ", not_empty);
-    if (nickname.length() == 0) {return 1;}
+    if (nickname.length() == 0) {
+        return 1;
+    }
     std::string phone_number = get_input("Phone Number: ", validate_phonenbr);
-    if (phone_number.length() == 0) {return 1;}
+    if (phone_number.length() == 0) {
+        return 1;
+    }
     std::string secret = get_input("Darkest Secret: ", not_empty);
-    if (secret.length() == 0) {return 1;}
+    if (secret.length() == 0) {
+        return 1;
+    }
     this->contacts[this->index] = Contact(first_name, last_name, nickname, phone_number, secret);
 
     this->index++;
@@ -100,18 +112,15 @@ int PhoneBook::add()
     return 0;
 }
 
-int PhoneBook::search()
-{
+int PhoneBook::search() {
     if (!this->is_full && this->index == 0) {
         std::cout << "\033[31m" << "There are no contacts yet" << "\033[0m" << std::endl;
         return 1;
     }
-    std::cout << std::right << "\033[1m" << std::setw(10) << "Index"
-			<< "|" << std::setw(10) << "First Name"
-			<< "|" << std::setw(10) << "Last Name"
-			<< "|" << std::setw(10) << "Nickname" << "\033[0m" << std::endl;
-    for (int i = 0; this->valid_index(i); i++)
-    {
+    std::cout << std::right << "\033[1m" << std::setw(10) << "Index" << "|" << std::setw(10)
+              << "First Name" << "|" << std::setw(10) << "Last Name" << "|" << std::setw(10)
+              << "Nickname" << "\033[0m" << std::endl;
+    for (int i = 0; this->valid_index(i); i++) {
         std::cout << std::setw(10) << i << "|";
         this->contacts[i].display_short();
     }
@@ -141,4 +150,3 @@ int PhoneBook::search()
 bool PhoneBook::valid_index(int index) {
     return index >= 0 && ((!this->is_full && index < this->index) || (this->is_full && index < 8));
 }
-
