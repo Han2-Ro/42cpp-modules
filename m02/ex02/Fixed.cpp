@@ -9,18 +9,18 @@ Fixed::Fixed() : data_(0) {
 }
 
 Fixed::Fixed(const int value) {
-    data_ = value * std::pow(2, DECIMAL_PLACES);
+    data_ = value * std::pow(2, BINARY_POINT);
 }
 
 Fixed::Fixed(const float value) {
-    data_ = value * std::pow(2, DECIMAL_PLACES);
+    data_ = value * std::pow(2, BINARY_POINT);
 }
 
 Fixed::Fixed(const Fixed& other) : data_(other.data_) {
     // std::cout << "Copy constructor called" << std::endl;
 }
 
-Fixed::~Fixed(){
+Fixed::~Fixed() {
     // std::cout << "Destructor called" << std::endl;
 };
 
@@ -35,11 +35,11 @@ void Fixed::setRawBits(const int raw) {
 }
 
 int Fixed::toInt() const {
-    return data_ / std::pow(2, DECIMAL_PLACES);
+    return data_ / std::pow(2, BINARY_POINT);
 }
 
 float Fixed::toFloat() const {
-    return data_ / std::pow(2, DECIMAL_PLACES);
+    return data_ / std::pow(2, BINARY_POINT);
 }
 
 Fixed& Fixed::operator=(const Fixed& other) {
@@ -95,13 +95,25 @@ Fixed Fixed::operator-(Fixed other) const {
 
 Fixed& Fixed::operator*=(const Fixed& other) {
     double d = this->data_ * other.data_;
-    this->data_ = d / pow(2, DECIMAL_PLACES);
+    this->data_ = d / pow(2, BINARY_POINT);
     return *this;
 }
 
 Fixed Fixed::operator*(Fixed other) const {
     other *= *this;
     return other;
+}
+
+Fixed& Fixed::operator/=(const Fixed& other) {
+    double d = (double)this->data_ / (double)other.data_;
+    this->data_ = d * pow(2, BINARY_POINT);
+    return *this;
+}
+
+Fixed Fixed::operator/(Fixed other) const {
+    Fixed res(*this);
+    res /= other;
+    return res;
 }
 
 std::ostream& operator<<(std::ostream& os, const Fixed& fixed) {

@@ -3,7 +3,7 @@
 class Fixed {
    private:
     int              data_;
-    static const int DECIMAL_PLACES = 8;
+    static const int BINARY_POINT = 8;
 
    public:
     Fixed();
@@ -28,6 +28,7 @@ class Fixed {
     Fixed  operator-(Fixed other) const;
     Fixed& operator*=(const Fixed& other);
     Fixed  operator*(Fixed other) const;
+    Fixed& operator/=(const Fixed& other);
     Fixed  operator/(Fixed other) const;
 };
 

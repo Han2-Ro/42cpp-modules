@@ -50,15 +50,19 @@ int main() {
     // debug
     Fixed x(42.625f);
     Fixed y = 5;
-    y += 1;
+    y += 1;  // 6
     Fixed z;
     z = x + y;
     std::cout << x << "+" << y << "=" << z << std::endl;
-    y -= -4;
+    y -= -4;  // 10
     z = x - y;
     std::cout << x << "-" << y << "=" << z << std::endl;
     x = 3;
     z = x * y;
     std::cout << x << "*" << y << "=" << z << std::endl;
+    x *= 4.5f;  // 13.5
+    y /= 2;     // 5
+    z = x / y;
+    std::cout << x << "/" << y << "=" << z << std::endl;
     return 0;
 }
