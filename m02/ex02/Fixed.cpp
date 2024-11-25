@@ -116,6 +116,32 @@ Fixed Fixed::operator/(Fixed other) const {
     return res;
 }
 
+Fixed& Fixed::operator++() {
+    data_++;
+    return *this;
+}
+
+Fixed Fixed::operator++(int) {
+    Fixed old = *this;
+    operator++();
+    return old;
+}
+
+Fixed& Fixed::operator--() {
+    data_--;
+    return *this;
+}
+
+Fixed Fixed::operator--(int) {
+    Fixed old = *this;
+    operator--();
+    return old;
+}
+
+Fixed& Fixed::min(const Fixed& a, const Fixed& b) {
+    return a < b ? a : b;
+}
+
 std::ostream& operator<<(std::ostream& os, const Fixed& fixed) {
     os << fixed.toFloat();
     return os;
