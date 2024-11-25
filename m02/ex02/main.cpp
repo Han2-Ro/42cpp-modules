@@ -48,10 +48,14 @@ int main() {
     // from subject
 
     // debug
-    Fixed x(42.4f);
+    Fixed x(42.625f);
     Fixed y = 5;
+    y += 1;
     Fixed z;
     z = x + y;
     std::cout << x << "+" << y << "=" << z << std::endl;
+    y -= -4;
+    z = x - y;
+    std::cout << x << "-" << y << "=" << z << std::endl;
     return 0;
 }

@@ -22,10 +22,12 @@ class Fixed {
     bool   operator>=(const Fixed& other) const;
     bool   operator==(const Fixed& other) const;
     bool   operator!=(const Fixed& other) const;
-    Fixed  operator+(Fixed other);
-    Fixed  operator-(const Fixed& other);
-    Fixed  operator*(const Fixed& other);
-    Fixed  operator/(const Fixed& other);
+    Fixed& operator+=(const Fixed& other);
+    Fixed  operator+(Fixed other) const;
+    Fixed& operator-=(const Fixed& other);
+    Fixed  operator-(Fixed other) const;
+    Fixed  operator*(Fixed other);
+    Fixed  operator/(Fixed other);
 };
 
 std::ostream& operator<<(std::ostream& os, const Fixed& fixed);

@@ -5,7 +5,7 @@
 #include <ostream>
 
 Fixed::Fixed() : data_(0) {
-    std::cout << "Default constructor called" << std::endl;
+    // std::cout << "Default constructor called" << std::endl;
 }
 
 Fixed::Fixed(const int value) {
@@ -17,11 +17,11 @@ Fixed::Fixed(const float value) {
 }
 
 Fixed::Fixed(const Fixed& other) : data_(other.data_) {
-    std::cout << "Copy constructor called" << std::endl;
+    // std::cout << "Copy constructor called" << std::endl;
 }
 
-Fixed::~Fixed() {
-    std::cout << "Destructor called" << std::endl;
+Fixed::~Fixed(){
+    // std::cout << "Destructor called" << std::endl;
 };
 
 int Fixed::getRawBits() const {
@@ -43,7 +43,7 @@ float Fixed::toFloat() const {
 }
 
 Fixed& Fixed::operator=(const Fixed& other) {
-    std::cout << "Copy assignment operator called" << std::endl;
+    // std::cout << "Copy assignment operator called" << std::endl;
     data_ = other.data_;
     return *this;
 }
@@ -72,13 +72,25 @@ bool Fixed::operator!=(const Fixed& other) const {
     return !(data_ == other.data_);
 }
 
-Fixed Fixed::operator+(Fixed other) {
-    other.data_ += data_;
-    return data_;
+Fixed& Fixed::operator+=(const Fixed& other) {
+    this->data_ += other.data_;
+    return *this;
 }
 
-Fixed Fixed::operator-(const Fixed& other) {
-    return !(data_ == other.data_);
+Fixed Fixed::operator+(Fixed other) const {
+    other += *this;
+    return other;
+}
+
+Fixed& Fixed::operator-=(const Fixed& other) {
+    this->data_ -= other.data_;
+    return *this;
+}
+
+Fixed Fixed::operator-(Fixed other) const {
+    Fixed res(*this);
+    res -= other;
+    return res;
 }
 
 std::ostream& operator<<(std::ostream& os, const Fixed& fixed) {

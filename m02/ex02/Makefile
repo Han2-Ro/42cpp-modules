@@ -1,5 +1,5 @@
 CXX = c++
-CXXFLAGS = -std=c++98 -Wall -Wextra -Werror
+CXXFLAGS = -std=c++98 -Wall -Wextra -Werror -g
 NAME = ex02
 SRCS = main.cpp Fixed.cpp
 OBJS = $(SRCS:.cpp=.o)
