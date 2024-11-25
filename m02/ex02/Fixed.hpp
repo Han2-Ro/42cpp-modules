@@ -26,8 +26,9 @@ class Fixed {
     Fixed  operator+(Fixed other) const;
     Fixed& operator-=(const Fixed& other);
     Fixed  operator-(Fixed other) const;
-    Fixed  operator*(Fixed other);
-    Fixed  operator/(Fixed other);
+    Fixed& operator*=(const Fixed& other);
+    Fixed  operator*(Fixed other) const;
+    Fixed  operator/(Fixed other) const;
 };
 
 std::ostream& operator<<(std::ostream& os, const Fixed& fixed);

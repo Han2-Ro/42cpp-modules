@@ -57,5 +57,8 @@ int main() {
     y -= -4;
     z = x - y;
     std::cout << x << "-" << y << "=" << z << std::endl;
+    x = 3;
+    z = x * y;
+    std::cout << x << "*" << y << "=" << z << std::endl;
     return 0;
 }

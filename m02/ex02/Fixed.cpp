@@ -93,6 +93,17 @@ Fixed Fixed::operator-(Fixed other) const {
     return res;
 }
 
+Fixed& Fixed::operator*=(const Fixed& other) {
+    double d = this->data_ * other.data_;
+    this->data_ = d / pow(2, DECIMAL_PLACES);
+    return *this;
+}
+
+Fixed Fixed::operator*(Fixed other) const {
+    other *= *this;
+    return other;
+}
+
 std::ostream& operator<<(std::ostream& os, const Fixed& fixed) {
     os << fixed.toFloat();
     return os;
