@@ -45,33 +45,13 @@ void compare(float value) {
 }
 
 int main() {
-    // From the subject
-    Fixed       a;
-    Fixed const b(10);
-    Fixed const c(42.42f);
-    Fixed const d(b);
-    a = Fixed(1234.4321f);
-    std::cout << "a is " << a << std::endl;
-    std::cout << "b is " << b << std::endl;
-    std::cout << "c is " << c << std::endl;
-    std::cout << "d is " << d << std::endl;
-    std::cout << "a is " << a.toInt() << " as integer" << std::endl;
-    std::cout << "b is " << b.toInt() << " as integer" << std::endl;
-    std::cout << "c is " << c.toInt() << " as integer" << std::endl;
-    std::cout << "d is " << d.toInt() << " as integer" << std::endl;
+    // from subject
 
-    // My own checks
-    compare(1);
-    compare(1234.4321);
-    compare(1.1111);
-    compare(42.4242);
-    compare(0.00390625);
-    compare(1.005859375);
-    compare(536870912);
-    compare(-4242.42);
-
-    // demonstration of overflow
-    short x = short(40000);
-    std::cout << x << std::endl;
+    // debug
+    Fixed x(42.4f);
+    Fixed y = 5;
+    Fixed z;
+    z = x + y;
+    std::cout << x << "+" << y << "=" << z << std::endl;
     return 0;
 }

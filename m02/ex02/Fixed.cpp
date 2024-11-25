@@ -2,7 +2,6 @@
 
 #include <cmath>
 #include <iostream>
-#include <iterator>
 #include <ostream>
 
 Fixed::Fixed() : data_(0) {
@@ -70,6 +69,15 @@ bool Fixed::operator==(const Fixed& other) const {
 }
 
 bool Fixed::operator!=(const Fixed& other) const {
+    return !(data_ == other.data_);
+}
+
+Fixed Fixed::operator+(Fixed other) {
+    other.data_ += data_;
+    return data_;
+}
+
+Fixed Fixed::operator-(const Fixed& other) {
     return !(data_ == other.data_);
 }
 
