@@ -3,7 +3,7 @@
 class Fixed {
    private:
     int              data_;
-    static const int decimalPoint_ = 8;
+    static const int DECIMAL_PLACES = 8;
 
    public:
     Fixed();

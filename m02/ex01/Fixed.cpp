@@ -1,5 +1,6 @@
 #include "Fixed.hpp"
 
+#include <cmath>
 #include <iostream>
 #include <ostream>
 
@@ -7,10 +8,12 @@ Fixed::Fixed() : data_(0) {
     std::cout << "Default constructor called" << std::endl;
 }
 
-Fixed::Fixed(const int value) : data_(value * (2 ^ decimalPoint_)) {}
+Fixed::Fixed(const int value) {
+    data_ = value * std::pow(2, DECIMAL_PLACES);
+}
 
-Fixed::Fixed(const float value) : data_(0) {
-    (void)value;
+Fixed::Fixed(const float value) {
+    data_ = value * std::pow(2, DECIMAL_PLACES);
 }
 
 Fixed::Fixed(const Fixed& other) : data_(other.data_) {
@@ -38,15 +41,14 @@ void Fixed::setRawBits(const int raw) {
 }
 
 int Fixed::toInt() const {
-    return 0;
+    return data_ / std::pow(2, DECIMAL_PLACES);
 }
 
 float Fixed::toFloat() const {
-    return 0.0;
+    return data_ / std::pow(2, DECIMAL_PLACES);
 }
 
 std::ostream& operator<<(std::ostream& os, const Fixed& fixed) {
-    (void)fixed;
-    os << "WIP";
+    os << fixed.toFloat();
     return os;
 }
