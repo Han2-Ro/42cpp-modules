@@ -57,7 +57,7 @@ int main() {
     std::cout << Fixed::max(a, b) << std::endl;
     std::cout << std::endl;
 
-    // debug
+    // my tests
     Fixed x(42.625f);
     Fixed y = 5;
     y += 1;  // 6
