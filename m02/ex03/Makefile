@@ -1,7 +1,7 @@
 CXX = c++
 CXXFLAGS = -std=c++98 -Wall -Wextra -Werror -g
 NAME = ex03
-SRCS = main.cpp Fixed.cpp Point.cpp
+SRCS = main.cpp Fixed.cpp Point.cpp bsp.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)
