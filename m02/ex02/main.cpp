@@ -74,6 +74,7 @@ int main() {
     y /= 2;     // 5
     z = x / y;
     std::cout << x << "/" << y << "=" << z << std::endl;
+    std::cout << Fixed::min(x, y) << std::endl;
 
     std::cout << "3 < 4: " << (Fixed(3) < Fixed(4)) << std::endl;
     std::cout << "4 < 4: " << (Fixed(4) < Fixed(4)) << std::endl;
@@ -82,5 +83,6 @@ int main() {
     std::cout << "4.1 >= 100.123: " << (Fixed(4.1f) >= Fixed(100.123f)) << std::endl;
     std::cout << "3.1 == 3.1: " << (Fixed(3.1f) == Fixed(3.1f)) << std::endl;
     std::cout << "3.1 != 3.1: " << (Fixed(3.1f) != Fixed(3.1f)) << std::endl;
+    std::cout << "-300 < -4: " << (Fixed(-300) < Fixed(-4)) << std::endl;
     return 0;
 }
