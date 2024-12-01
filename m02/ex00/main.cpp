@@ -14,5 +14,8 @@ int main() {
     std::cout << a.getRawBits() << std::endl;
     b = a;
     std::cout << b.getRawBits() << std::endl;
+    a.setRawBits(69);
+    std::cout << a.getRawBits() << std::endl;
+    std::cout << b.getRawBits() << std::endl;
     return 0;
 }
