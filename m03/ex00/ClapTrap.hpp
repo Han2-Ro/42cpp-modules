@@ -1,13 +1,16 @@
 #pragma once
 
+#include <cwchar>
+#include <map>
 #include <string>
 
 class ClapTrap {
    private:
-    std::string  name_;
-    unsigned int health_;
-    unsigned int energy_;
-    unsigned int attackDamage_;
+    std::string                             name_;
+    unsigned int                            health_;
+    unsigned int                            energy_;
+    unsigned int                            attackDamage_;
+    static std::map<std::string, ClapTrap&> dict_;
 
    public:
     ClapTrap(std::string name);
@@ -17,4 +20,5 @@ class ClapTrap {
     void attack(const std::string& target);
     void takeDamage(unsigned int amount);
     void beRepaired(unsigned int amount);
+    void display() const;
 };
