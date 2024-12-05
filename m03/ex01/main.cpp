@@ -22,5 +22,10 @@ int main() {
     b.display();
     std::cout << "Copy of b:" << std::endl;
     c.display();
+    a.guardGate();
+    ClapTrap d("d");
+    d = a;
+    std::cout << "ClapTrap copy of a:" << std::endl;
+    d.display();
     return 0;
 }
