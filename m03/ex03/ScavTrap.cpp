@@ -7,18 +7,18 @@
 ScavTrap::ScavTrap() {}
 
 ScavTrap::ScavTrap(std::string name) : ClapTrap(name) {
-    std::cout << "ScavTrap: constructor called" << std::endl;
+    std::cout << "ScavTrap " << name_ << ": constructor called" << std::endl;
     health_ = 100;
     energy_ = 50;
     attackDamage_ = 20;
 }
 
 ScavTrap::ScavTrap(const ScavTrap& other) : ClapTrap(other) {
-    std::cout << "ScavTrap: Copy constructor called" << std::endl;
+    std::cout << "ScavTrap " << name_ << ": Copy constructor called" << std::endl;
 }
 
 ScavTrap::~ScavTrap() {
-    std::cout << "ScavTrap: Destructor called" << std::endl;
+    std::cout << "ScavTrap " << name_ << ": Destructor called" << std::endl;
 }
 
 void ScavTrap::guardGate() {

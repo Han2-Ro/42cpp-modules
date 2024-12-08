@@ -1,4 +1,4 @@
-CXX = c++
+CXX = clang++
 CXXFLAGS = -std=c++98 -Wall -Wextra -Werror -g
 NAME = ex03
 SRCS = main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp DiamondTrap.cpp
