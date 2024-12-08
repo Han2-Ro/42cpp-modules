@@ -1,5 +1,5 @@
-CXX = clang++
-CXXFLAGS = -std=c++98 -Wall -Wextra -Werror -g
+CXX = c++
+CXXFLAGS = -std=c++98 -Wall -Wextra -Werror
 NAME = ex03
 SRCS = main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp DiamondTrap.cpp
 OBJS = $(SRCS:.cpp=.o)
