@@ -1,6 +1,5 @@
 #pragma once
 
-#include <iostream>
 #include <string>
 
 class ClapTrap {
@@ -9,6 +8,7 @@ class ClapTrap {
     unsigned int health_;
     unsigned int energy_;
     unsigned int attackDamage_;
+    ClapTrap();
 
    public:
     ClapTrap(std::string name);
