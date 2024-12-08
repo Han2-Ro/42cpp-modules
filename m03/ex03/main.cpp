@@ -36,9 +36,10 @@ int main() {
     }
     {
         std::cout << std::endl << "polymorphism test:" << std::endl;
-        ClapTrap clapTrap = ScavTrap("scavy scones");
-        clapTrap.display();
-        clapTrap.attack("nobody");
+        ScavTrap  scavTrap("scavy scones");
+        ClapTrap* clapTrap = &scavTrap;
+        clapTrap->display();
+        clapTrap->attack("nobody");
     }
     return 0;
 }
