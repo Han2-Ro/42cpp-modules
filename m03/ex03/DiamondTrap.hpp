@@ -12,4 +12,5 @@ class DiamondTrap : public ScavTrap, public FragTrap {
     DiamondTrap(const DiamondTrap& other);
     ~DiamondTrap();
     void display() const;
+    void whoAmI();
 };

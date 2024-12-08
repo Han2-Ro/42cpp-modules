@@ -7,8 +7,10 @@ int main() {
     {
         DiamondTrap a("a");
         a.display();
+        a.whoAmI();
         DiamondTrap b("b");
         b.display();
+        b.whoAmI();
         for (int i = 0; i < 12; i++) {
             a.attack("b");
         }

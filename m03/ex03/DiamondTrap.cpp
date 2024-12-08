@@ -27,26 +27,31 @@ DiamondTrap::~DiamondTrap() {
     std::cout << "DiamondTrap " << name_ << ": Destructor called" << std::endl;
 }
 
+void DiamondTrap::whoAmI() {
+    std::cout << "My DiamondTrap Name is: " << name_ << std::endl;
+    std::cout << "My ClapTrap Name is: " << ClapTrap::name_ << std::endl;
+}
+
 void DiamondTrap::display() const {
     std::cout << "---------------------" << std::endl;
     std::cout << "DiamondTrap:" << std::endl;
-    std::cout << "Name:   " << name_ << std::endl;
-    std::cout << "Health: " << health_ << std::endl;
+    std::cout << "Name:   " << name_ << &this->name_ << std::endl;
+    std::cout << "Health: " << health_ << &this->health_ << std::endl;
     std::cout << "Energy: " << energy_ << std::endl;
     std::cout << "Attack Damage: " << attackDamage_ << std::endl;
     std::cout << "FragTrap:" << std::endl;
-    std::cout << "Name:   " << FragTrap::name_ << std::endl;
-    std::cout << "Health: " << FragTrap::health_ << std::endl;
+    std::cout << "Name:   " << FragTrap::name_ << &this->FragTrap::name_ << std::endl;
+    std::cout << "Health: " << FragTrap::health_ << &this->FragTrap::health_ << std::endl;
     std::cout << "Energy: " << FragTrap::energy_ << std::endl;
     std::cout << "Attack Damage: " << FragTrap::attackDamage_ << std::endl;
     std::cout << "ScavTrap:" << std::endl;
-    std::cout << "Name:   " << ScavTrap::name_ << std::endl;
-    std::cout << "Health: " << ScavTrap::health_ << std::endl;
+    std::cout << "Name:   " << ScavTrap::name_ << &this->ScavTrap::name_ << std::endl;
+    std::cout << "Health: " << ScavTrap::health_ << &this->ScavTrap::health_ << std::endl;
     std::cout << "Energy: " << ScavTrap::energy_ << std::endl;
     std::cout << "Attack Damage: " << ScavTrap::attackDamage_ << std::endl;
     std::cout << "ClapTrap:" << std::endl;
-    std::cout << "Name:   " << ClapTrap::name_ << std::endl;
-    std::cout << "Health: " << ClapTrap::health_ << std::endl;
+    std::cout << "Name:   " << ClapTrap::name_ << &this->ClapTrap::name_ << std::endl;
+    std::cout << "Health: " << ClapTrap::health_ << &this->ClapTrap::health_ << std::endl;
     std::cout << "Energy: " << ClapTrap::energy_ << std::endl;
     std::cout << "Attack Damage: " << ClapTrap::attackDamage_ << std::endl;
     std::cout << "---------------------" << std::endl;
