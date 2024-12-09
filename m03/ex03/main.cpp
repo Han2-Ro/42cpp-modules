@@ -19,7 +19,7 @@ int main() {
             b.takeDamage(4);
         }
         b.display();
-        FragTrap c(b);
+        DiamondTrap c(b);
         std::cout << "Copy of b:" << std::endl;
         c.display();
         for (int i = 0; i < 12; i++) {
