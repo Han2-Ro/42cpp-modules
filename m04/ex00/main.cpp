@@ -14,9 +14,13 @@ int main() {
         const Animal* i = new Cat();
         std::cout << j->getType() << " " << std::endl;
         std::cout << i->getType() << " " << std::endl;
+        std::cout << meta->getType() << " " << std::endl;
         i->makeSound();  // will output the cat sound!
         j->makeSound();
         meta->makeSound();
+        delete meta;
+        delete j;
+        delete i;
     }
     std::cout << "----------------" << std::endl;
     {
@@ -26,6 +30,7 @@ int main() {
         std::cout << wrongAnimal->getType() << " " << std::endl;
         wrongCat->makeSound();
         wrongAnimal->makeSound();  // won't output the cat sound!
+        delete wrongCat;
     }
     return 0;
 }
