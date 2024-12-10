@@ -21,19 +21,6 @@ int main() {
     }
     std::cout << "-----------------" << std::endl;
     {
-        Brain* a = new Brain();
-        a->setIdea(0, "I want food.");
-        std::cout << "a: " << a->getIdea(0) << std::endl;
-        Brain* b = new Brain(*a);
-        std::cout << "b: " << b->getIdea(0) << std::endl;
-        a->setIdea(0, "I want more food.");
-        std::cout << "a: " << a->getIdea(0) << std::endl;
-        std::cout << "b: " << b->getIdea(0) << std::endl;
-        delete a;
-        delete b;
-    }
-    std::cout << "-----------------" << std::endl;
-    {
         // test deep copy
         Animal* a = new Cat();
         a->getBrain()->setIdea(0, "I want food.");
@@ -45,5 +32,17 @@ int main() {
         std::cout << "b: " << b->getBrain()->getIdea(0) << std::endl;
         delete a;
         delete b;
+    }
+    std::cout << "-----------------" << std::endl;
+    {
+        // test deep copy
+        Animal a = Cat();
+        a.getBrain()->setIdea(0, "I want food.");
+        std::cout << "a: " << a.getBrain()->getIdea(0) << std::endl;
+        Animal b(a);
+        std::cout << "b: " << b.getBrain()->getIdea(0) << std::endl;
+        a.getBrain()->setIdea(0, "I want more food.");
+        std::cout << "a: " << a.getBrain()->getIdea(0) << std::endl;
+        std::cout << "b: " << b.getBrain()->getIdea(0) << std::endl;
     }
 }
