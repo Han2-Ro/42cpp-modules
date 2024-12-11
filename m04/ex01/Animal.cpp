@@ -9,7 +9,7 @@ Animal::Animal() : type("Undefined"), brain(new Brain()) {
 }
 
 Animal::Animal(const std::string& type) : type(type), brain(new Brain()) {
-    std::cout << "Animal: Parmeter constructor called" << std::endl;
+    std::cout << "Animal: Parameter constructor called" << std::endl;
 }
 
 Animal::Animal(const Animal& other) : brain(new Brain()) {
