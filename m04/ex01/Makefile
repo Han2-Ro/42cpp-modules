@@ -1,5 +1,5 @@
 CXX = c++
-CXXFLAGS = -std=c++98 -Wall -Wextra -Werror -g
+CXXFLAGS = -std=c++98 -Wall -Wextra -Werror
 NAME = ex01.out
 SRCS = main.cpp Animal.cpp Cat.cpp Dog.cpp Brain.cpp
 OBJS = $(SRCS:.cpp=.o)
