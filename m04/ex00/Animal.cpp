@@ -8,7 +8,9 @@ Animal::Animal() : type("Undefined") {
     std::cout << "Animal: Default constructor called" << std::endl;
 }
 
-Animal::Animal(const std::string& type) : type(type) {}
+Animal::Animal(const std::string& type) : type(type) {
+    std::cout << "Animal: Parameter constructor called" << std::endl;
+}
 
 Animal::Animal(const Animal& other) {
     std::cout << "Animal: Copy constructor called" << std::endl;
