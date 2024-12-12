@@ -22,10 +22,10 @@ int main() {
     std::cout << "-----------------" << std::endl;
     {
         // test deep copy
-        Animal* a = new Cat();
+        Cat* a = new Cat();
         a->getBrain()->setIdea(0, "I want food.");
         std::cout << "a: " << a->getBrain()->getIdea(0) << std::endl;
-        Animal* b = new Animal(*a);
+        Cat* b = new Cat(*a);
         std::cout << "b: " << b->getBrain()->getIdea(0) << std::endl;
         a->getBrain()->setIdea(0, "I want more food.");
         std::cout << "a: " << a->getBrain()->getIdea(0) << std::endl;
@@ -35,16 +35,10 @@ int main() {
     }
     std::cout << "-----------------" << std::endl;
     {
-        // test deep copy and demonstrate that you need a pointer for polymorphism
+        // demonstrate that you need a pointer for polymorphism
         Animal a = Cat();
-        a.getBrain()->setIdea(0, "I want food.");
-        std::cout << "a: " << a.getBrain()->getIdea(0) << std::endl;
         a.makeSound();
         Animal b(a);
-        std::cout << "b: " << b.getBrain()->getIdea(0) << std::endl;
         b.makeSound();
-        a.getBrain()->setIdea(0, "I want more food.");
-        std::cout << "a: " << a.getBrain()->getIdea(0) << std::endl;
-        std::cout << "b: " << b.getBrain()->getIdea(0) << std::endl;
     }
 }

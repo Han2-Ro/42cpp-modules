@@ -36,5 +36,6 @@ int main() {
         delete b;
     }
     // This does not work anymore:
-    // Animal *animal = new Animal();
+    // Animal *a = new Animal();
+    // Animal b;
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Animal.hpp"
+#include "Brain.hpp"
 
 class Cat : public Animal {
    protected:
@@ -11,5 +12,6 @@ class Cat : public Animal {
     Cat(const Cat& other);
     Cat& operator=(const Cat& other);
     ~Cat();
-    void makeSound() const;
+    Brain* getBrain() const;
+    void   makeSound() const;
 };

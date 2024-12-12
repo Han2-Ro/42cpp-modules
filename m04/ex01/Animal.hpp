@@ -2,8 +2,6 @@
 
 #include <string>
 
-#include "Brain.hpp"
-
 class Animal {
    protected:
     std::string type;
@@ -15,6 +13,5 @@ class Animal {
     Animal& operator=(const Animal& other);
     virtual ~Animal();
     std::string  getType() const;
-    Brain*       getBrain() const;
     virtual void makeSound() const;
 };
