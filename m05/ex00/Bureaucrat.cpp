@@ -25,7 +25,7 @@ Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other) {
 }
 
 Bureaucrat::~Bureaucrat() {
-    std::cout << "Bureaucrat: Destructor called" << std::endl;
+    std::cout << "Bureaucrat (" << name_ << "): Destructor called" << std::endl;
 }
 
 std::string Bureaucrat::getName() const {
@@ -34,6 +34,22 @@ std::string Bureaucrat::getName() const {
 
 unsigned int Bureaucrat::getGrade() const {
     return grade_;
+}
+
+void Bureaucrat::incrementGrade() {
+    if (grade_ <= 1) {
+        throw GradeTooHighException();
+    } else {
+        grade_--;
+    }
+}
+
+void Bureaucrat::decrementGrade() {
+    if (grade_ >= 150) {
+        throw GradeTooLowException();
+    } else {
+        grade_++;
+    }
 }
 
 const char* Bureaucrat::GradeTooHighException::what() const throw() {
