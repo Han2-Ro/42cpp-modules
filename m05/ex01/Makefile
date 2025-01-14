@@ -1,7 +1,7 @@
 CXX = clang++
 CXXFLAGS = -std=c++98 -Wall -Wextra -Werror
 NAME = ex01.out
-SRCS = main.cpp Bureaucrat.cpp
+SRCS = main.cpp Bureaucrat.cpp Form.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)
