@@ -1,6 +1,6 @@
 #include "Bureaucrat.hpp"
 
-Bureaucrat::Bureaucrat() {
+Bureaucrat::Bureaucrat() : name_("default"), grade_(150) {
     std::cout << "Bureaucrat: Default constructor called" << std::endl;
 }
 
@@ -13,9 +13,8 @@ Bureaucrat::Bureaucrat(std::string name, unsigned int grade) : name_(name), grad
     }
 }
 
-Bureaucrat::Bureaucrat(const Bureaucrat& other) {
+Bureaucrat::Bureaucrat(const Bureaucrat& other) : name_(other.name_), grade_(other.grade_) {
     std::cout << "Bureaucrat: Copy constructor called" << std::endl;
-    *this = other;
 }
 
 Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other) {
@@ -57,8 +56,17 @@ void Bureaucrat::signForm(Form& form) {
         form.beSigned(*this);
         std::cout << name_ << " signed " << form.getName() << std::endl;
     } catch (const std::exception& e) {
-        std::cout << name_ << " couldn't sign " << form.getName() << " because " << e.what() << std::endl;
+        std::cout << name_ << " couldn't sign " << form.getName() << " because " << e.what()
+                  << std::endl;
     }
+}
+
+const char* Bureaucrat::GradeTooHighException::what() const throw() {
+    return "Bureaucrat: grade is too high";
+}
+
+const char* Bureaucrat::GradeTooLowException::what() const throw() {
+    return "Bureaucrat: grade is too low";
 }
 
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& bureaucrat) {

@@ -2,7 +2,6 @@
 
 #include "Bureaucrat.hpp"
 #include "Form.hpp"
-#include "GradeExceptions.hpp"
 
 void test_bureaucrat_basics() {
     std::cout << "\n=== Testing Bureaucrat Basics ===\n" << std::endl;
@@ -14,14 +13,14 @@ void test_bureaucrat_basics() {
     try {
         Bureaucrat anna("Anna", 0);
         std::cout << anna << std::endl;
-    } catch (const GradeTooHighException& e) {
+    } catch (const Bureaucrat::GradeTooHighException& e) {
         std::cout << e.what() << std::endl;
     }
 
     try {
         Bureaucrat bob("Bob", 151);
         std::cout << bob << std::endl;
-    } catch (const GradeTooLowException& e) {
+    } catch (const Bureaucrat::GradeTooLowException& e) {
         std::cout << e.what() << std::endl;
     }
 }
@@ -39,14 +38,14 @@ void test_form_creation() {
     try {
         Form tooHigh("Invalid Form", 0, 25);
         std::cout << tooHigh << std::endl;
-    } catch (const GradeTooHighException& e) {
+    } catch (const Form::GradeTooHighException& e) {
         std::cout << "Creation failed as expected: " << e.what() << std::endl;
     }
 
     try {
         Form tooLow("Invalid Form", 50, 151);
         std::cout << tooLow << std::endl;
-    } catch (const GradeTooLowException& e) {
+    } catch (const Form::GradeTooLowException& e) {
         std::cout << "Creation failed as expected: " << e.what() << std::endl;
     }
 }

@@ -4,7 +4,6 @@
 #include <string>
 
 #include "Bureaucrat.hpp"
-#include "GradeExceptions.hpp"
 
 class Bureaucrat;
 
@@ -16,6 +15,16 @@ class Form {
     const unsigned int grade_to_execute_;
 
    public:
+    class GradeTooHighException : public std::exception {
+       public:
+        virtual const char* what() const throw();
+    };
+
+    class GradeTooLowException : public std::exception {
+       public:
+        virtual const char* what() const throw();
+    };
+
     Form();
     Form(const std::string& name, unsigned int grade_to_sign, unsigned int grade_to_execute);
     Form(const Form& other);
@@ -30,5 +39,4 @@ class Form {
     void beSigned(const Bureaucrat& bureaucrat);
 };
 
-// Stream operator overload
 std::ostream& operator<<(std::ostream& os, const Form& form);

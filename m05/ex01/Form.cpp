@@ -5,7 +5,10 @@ Form::Form() : name_("default"), is_signed_(false), grade_to_sign_(150), grade_t
 }
 
 Form::Form(const std::string& name, unsigned int grade_to_sign, unsigned int grade_to_execute)
-    : name_(name), is_signed_(false), grade_to_sign_(grade_to_sign), grade_to_execute_(grade_to_execute) {
+    : name_(name),
+      is_signed_(false),
+      grade_to_sign_(grade_to_sign),
+      grade_to_execute_(grade_to_execute) {
     std::cout << "Form: Parameter constructor called" << std::endl;
     if (grade_to_sign < 1 || grade_to_execute < 1) {
         throw GradeTooHighException();
@@ -16,8 +19,10 @@ Form::Form(const std::string& name, unsigned int grade_to_sign, unsigned int gra
 }
 
 Form::Form(const Form& other)
-    : name_(other.name_), is_signed_(other.is_signed_),
-      grade_to_sign_(other.grade_to_sign_), grade_to_execute_(other.grade_to_execute_) {
+    : name_(other.name_),
+      is_signed_(other.is_signed_),
+      grade_to_sign_(other.grade_to_sign_),
+      grade_to_execute_(other.grade_to_execute_) {
     std::cout << "Form: Copy constructor called" << std::endl;
 }
 
@@ -25,7 +30,6 @@ Form& Form::operator=(const Form& other) {
     std::cout << "Form: Copy assignment operator called" << std::endl;
     if (this != &other) {
         is_signed_ = other.is_signed_;
-        // Note: can't assign const members
     }
     return *this;
 }
@@ -58,9 +62,16 @@ void Form::beSigned(const Bureaucrat& bureaucrat) {
     }
 }
 
+const char* Form::GradeTooHighException::what() const throw() {
+    return "Form: grade is too high";
+}
+
+const char* Form::GradeTooLowException::what() const throw() {
+    return "Form: grade is too low";
+}
+
 std::ostream& operator<<(std::ostream& os, const Form& form) {
-    os << "Form " << form.getName() 
-       << " (sign grade: " << form.getGradeToSign()
+    os << "Form " << form.getName() << " (sign grade: " << form.getGradeToSign()
        << ", execute grade: " << form.getGradeToExecute()
        << ", signed: " << (form.getIsSigned() ? "yes" : "no") << ")";
     return os;

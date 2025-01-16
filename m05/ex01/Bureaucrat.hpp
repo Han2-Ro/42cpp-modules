@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 
-#include "Bureaucrat.hpp"
 #include "Form.hpp"
 
 class Form;
@@ -11,9 +10,19 @@ class Bureaucrat {
    private:
     const std::string name_;
     unsigned int      grade_;
-    Bureaucrat();
 
    public:
+    class GradeTooHighException : public std::exception {
+       public:
+        virtual const char* what() const throw();
+    };
+
+    class GradeTooLowException : public std::exception {
+       public:
+        virtual const char* what() const throw();
+    };
+
+    Bureaucrat();
     Bureaucrat(std::string name, unsigned int grade);
     Bureaucrat(const Bureaucrat& other);
     Bureaucrat& operator=(const Bureaucrat& other);
