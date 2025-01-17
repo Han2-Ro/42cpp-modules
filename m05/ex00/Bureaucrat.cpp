@@ -1,7 +1,7 @@
 
 #include "Bureaucrat.hpp"
 
-Bureaucrat::Bureaucrat() {
+Bureaucrat::Bureaucrat() : name_("default"), grade_(150) {
     std::cout << "Bureaucrat: Default constructor called" << std::endl;
 }
 Bureaucrat::Bureaucrat(std::string name, unsigned int grade) : name_(name), grade_(grade) {
@@ -13,9 +13,8 @@ Bureaucrat::Bureaucrat(std::string name, unsigned int grade) : name_(name), grad
     }
 }
 
-Bureaucrat::Bureaucrat(const Bureaucrat& other) {
+Bureaucrat::Bureaucrat(const Bureaucrat& other) : name_(other.name_), grade_(other.grade_) {
     std::cout << "Bureaucrat: Copy constructor called" << std::endl;
-    *this = other;
 }
 
 Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other) {
@@ -61,6 +60,6 @@ const char* Bureaucrat::GradeTooLowException::what() const throw() {
 }
 
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& bureaucrat) {
-    std::cout << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade();
+    os << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade();
     return os;
 }

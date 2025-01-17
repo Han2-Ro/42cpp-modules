@@ -1,6 +1,6 @@
 #include "Bureaucrat.hpp"
 
-Bureaucrat::Bureaucrat() : name_("default"), grade_(150) {
+Bureaucrat::Bureaucrat() {
     std::cout << "Bureaucrat: Default constructor called" << std::endl;
 }
 
@@ -13,8 +13,9 @@ Bureaucrat::Bureaucrat(std::string name, unsigned int grade) : name_(name), grad
     }
 }
 
-Bureaucrat::Bureaucrat(const Bureaucrat& other) : name_(other.name_), grade_(other.grade_) {
+Bureaucrat::Bureaucrat(const Bureaucrat& other) {
     std::cout << "Bureaucrat: Copy constructor called" << std::endl;
+    *this = other;
 }
 
 Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other) {
@@ -51,12 +52,22 @@ void Bureaucrat::decrementGrade() {
     }
 }
 
-void Bureaucrat::signForm(Form& form) {
+void Bureaucrat::signForm(AForm& form) {
     try {
         form.beSigned(*this);
         std::cout << name_ << " signed " << form.getName() << std::endl;
     } catch (const std::exception& e) {
         std::cout << name_ << " couldn't sign " << form.getName() << " because " << e.what()
+                  << std::endl;
+    }
+}
+
+void Bureaucrat::executeForm(AForm const& form) {
+    try {
+        form.execute(*this);
+        std::cout << name_ << " executed " << form.getName() << std::endl;
+    } catch (const std::exception& e) {
+        std::cout << name_ << " couldn't execute " << form.getName() << " because " << e.what()
                   << std::endl;
     }
 }
