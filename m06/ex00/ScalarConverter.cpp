@@ -49,9 +49,7 @@ static double getDoubleValue(const std::string& input) {
     }
 }
 
-void ScalarConverter::convert(const std::string& input) {
-    double value = getDoubleValue(input);
-
+static void printCharValue(double value) {
     std::cout << "char: ";
     if (std::isnan(value) || std::isinf(value) || value < 0 || value > 127) {
         std::cout << "impossible" << std::endl;
@@ -60,7 +58,9 @@ void ScalarConverter::convert(const std::string& input) {
     } else {
         std::cout << "'" << static_cast<char>(value) << "'" << std::endl;
     }
+}
 
+static void printIntValue(double value) {
     std::cout << "int: ";
     if (std::isnan(value) || std::isinf(value) || value > std::numeric_limits<int>::max() ||
         value < std::numeric_limits<int>::min()) {
@@ -68,7 +68,9 @@ void ScalarConverter::convert(const std::string& input) {
     } else {
         std::cout << static_cast<int>(value) << std::endl;
     }
+}
 
+static void printFloatValue(double value) {
     std::cout << "float: ";
     if (std::isnan(value)) {
         std::cout << "nanf" << std::endl;
@@ -78,7 +80,9 @@ void ScalarConverter::convert(const std::string& input) {
         std::cout << std::fixed << std::setprecision(1) << static_cast<float>(value) << "f"
                   << std::endl;
     }
+}
 
+static void printDoubleValue(double value) {
     std::cout << "double: ";
     if (std::isnan(value)) {
         std::cout << "nan" << std::endl;
@@ -87,4 +91,13 @@ void ScalarConverter::convert(const std::string& input) {
     } else {
         std::cout << std::fixed << std::setprecision(1) << value << std::endl;
     }
+}
+
+void ScalarConverter::convert(const std::string& input) {
+    double value = getDoubleValue(input);
+
+    printCharValue(value);
+    printIntValue(value);
+    printFloatValue(value);
+    printDoubleValue(value);
 }
