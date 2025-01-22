@@ -2,14 +2,7 @@
 
 #include <stdint.h>
 
-#include <string>
-
-struct Data {
-    std::string name;
-    int         age;
-
-    Data(std::string name, int age) : name(name), age(age) {}
-};
+#include "Data.hpp"
 
 class Serializer {
    private:
