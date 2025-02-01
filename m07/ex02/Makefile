@@ -1,4 +1,4 @@
-NAME = ex00.out
+NAME = ex02.out
 SRCS = main.cpp
 
 include ../common.mk
