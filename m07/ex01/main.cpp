@@ -2,7 +2,7 @@
 
 #include "iter.hpp"
 
-void print(int& num) {
+void print(const int& num) {
     std::cout << num << std::endl;
 }
 
