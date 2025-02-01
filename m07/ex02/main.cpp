@@ -1,8 +1,59 @@
 #include <iostream>
-
 #include "Array.hpp"
+#include <cstdlib>
 
-int main() {
+#define MAX_VAL 750
+int subj()
+{
+    Array<int> numbers(MAX_VAL);
+    int* mirror = new int[MAX_VAL];
+    srand(time(NULL));
+    for (int i = 0; i < MAX_VAL; i++)
+    {
+        const int value = rand();
+        numbers[i] = value;
+        mirror[i] = value;
+    }
+    //SCOPE
+    {
+        Array<int> tmp = numbers;
+        Array<int> test(tmp);
+    }
+
+    for (int i = 0; i < MAX_VAL; i++)
+    {
+        if (mirror[i] != numbers[i])
+        {
+            std::cerr << "didn't save the same value!!" << std::endl;
+            return 1;
+        }
+    }
+    try
+    {
+        numbers[-2] = 0;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    try
+    {
+        numbers[MAX_VAL] = 0;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+
+    for (int i = 0; i < MAX_VAL; i++)
+    {
+        numbers[i] = rand();
+    }
+    delete [] mirror;//
+    return 0;
+}
+
+void my_test() {
     {
         Array<int> arr;
         std::cout << "arr: " << arr << std::endl;
@@ -84,5 +135,12 @@ int main() {
         std::cout << "arr1: " << arr1 << " size: " << arr1.size() << std::endl;
         std::cout << "arr2: " << arr2 << " size: " << arr2.size() << std::endl;
     }
+}
+
+
+int main() {
+    my_test();
+    std::cout << "-----------------------" << std::endl;
+    subj();
     return 0;
 }

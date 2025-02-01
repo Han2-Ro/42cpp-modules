@@ -1,4 +1,4 @@
-CXX = clang++
+CXX = c++
 CXXFLAGS = -std=c++98 -Wall -Wextra -Werror
 OBJS = $(SRCS:.cpp=.o)
 
