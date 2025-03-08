@@ -7,6 +7,15 @@ int main() {
     sp.addNumber(17);
     sp.addNumber(9);
     sp.addNumber(11);
+    try
+    {
+        sp.addNumber(11);
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    
     sp.print();
     return 0;
 }

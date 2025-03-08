@@ -28,6 +28,9 @@ Span::~Span() {
 }
 
 int Span::addNumber(int n) {
+    if (numbers.size() >= N) {
+        throw SpanFullException();
+    }
     numbers.insert(n);
     return 0;
 }

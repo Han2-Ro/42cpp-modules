@@ -8,6 +8,12 @@ class Span {
     std::multiset<int> numbers;
 
    public:
+    class SpanFullException : public std::exception {
+       public:
+        virtual const char* what() const throw() {
+            return "Span is full";
+        }
+    };
     Span();
     Span(unsigned int N);
     Span(const Span& other);
