@@ -41,7 +41,7 @@ unsigned int Span::shortestSpan() {
     if (numbers.size() < 2) {
         throw std::exception();
     }
-    unsigned int                 shortest = INT_MAX;
+    unsigned int                 shortest = UINT_MAX;
     std::multiset<int>::iterator it = numbers.begin();
     std::multiset<int>::iterator it2 = numbers.begin();
     it2++;
