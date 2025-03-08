@@ -1,6 +1,8 @@
 
 #include "Span.hpp"
 
+#include <limits.h>
+
 #include <iostream>
 
 Span::Span() : N(0) {
@@ -35,12 +37,27 @@ int Span::addNumber(int n) {
     return 0;
 }
 
-int Span::shortestSpan() {
-    return 0;
+unsigned int Span::shortestSpan() {
+    if (numbers.size() < 2) {
+        throw std::exception();
+    }
+    unsigned int                 shortest = INT_MAX;
+    std::multiset<int>::iterator it = numbers.begin();
+    std::multiset<int>::iterator it2 = numbers.begin();
+    it2++;
+    for (; it2 != numbers.end(); it++, it2++) {
+        if ((unsigned int)(*it2 - *it) < shortest) {
+            shortest = *it2 - *it;
+        }
+    }
+    return shortest;
 }
 
-int Span::longestSpan() {
-    return 0;
+unsigned int Span::longestSpan() {
+    if (numbers.size() < 2) {
+        throw std::exception();
+    }
+    return *numbers.rbegin() - *numbers.begin();  // TODO: what to do when overflow?
 }
 
 void Span::print() {
