@@ -23,4 +23,11 @@ class Span {
     unsigned int shortestSpan();
     unsigned int longestSpan();
     void print();
+    template <typename Iterator>
+    void addNumbers(Iterator begin, Iterator end) {
+        while (begin != end) {
+            addNumber(*begin);
+            begin++;
+        }
+    }
 };
