@@ -14,6 +14,12 @@ class Span {
             return "Span is full";
         }
     };
+    class NotEnoughNumbersException : public std::exception {
+       public:
+        virtual const char* what() const throw() {
+            return "Not enough numbers to calculate span";
+        }
+    };
     Span();
     Span(unsigned int N);
     Span(const Span& other);

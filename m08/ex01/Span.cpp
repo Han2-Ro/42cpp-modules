@@ -39,7 +39,7 @@ int Span::addNumber(int n) {
 
 unsigned int Span::shortestSpan() {
     if (numbers.size() < 2) {
-        throw std::exception();
+        throw Span::NotEnoughNumbersException();
     }
     unsigned int                 shortest = UINT_MAX;
     std::multiset<int>::iterator it = numbers.begin();
@@ -55,7 +55,7 @@ unsigned int Span::shortestSpan() {
 
 unsigned int Span::longestSpan() {
     if (numbers.size() < 2) {
-        throw std::exception();
+        throw Span::NotEnoughNumbersException();
     }
     return *numbers.rbegin() - *numbers.begin();  // TODO: what to do when overflow?
 }
