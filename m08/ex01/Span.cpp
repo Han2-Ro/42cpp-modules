@@ -57,7 +57,7 @@ unsigned int Span::longestSpan() {
     if (numbers.size() < 2) {
         throw Span::NotEnoughNumbersException();
     }
-    return *numbers.rbegin() - *numbers.begin();  // TODO: what to do when overflow?
+    return *numbers.rbegin() - *numbers.begin();
 }
 
 void Span::print() {
