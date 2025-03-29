@@ -35,7 +35,7 @@ class MutantStack : public std::stack<T> {
             return !(*this == other);
         }
         T& operator*() {
-            if (_index < 0 || _index >= _stack->size()) {
+            if (_index >= _stack->size()) {
                 throw std::out_of_range("Iterator out of range");
             }
             return _stack->c[_index];
