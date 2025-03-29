@@ -5,11 +5,11 @@
 
 #include <iostream>
 
-Span::Span() : N(0) {
+Span::Span() : _n(0) {
     std::cout << "Span: Default constructor called" << std::endl;
 }
 
-Span::Span(unsigned int N) : N(N) {
+Span::Span(unsigned int N) : _n(N) {
     std::cout << "Span: Parameter constructor called" << std::endl;
 }
 
@@ -20,7 +20,7 @@ Span::Span(const Span& other) {
 
 Span& Span::operator=(const Span& other) {
     std::cout << "Span: Copy assignment operator called" << std::endl;
-    this->N = other.N;
+    this->_n = other._n;
     this->numbers = other.numbers;
     return *this;
 }
@@ -30,7 +30,7 @@ Span::~Span() {
 }
 
 int Span::addNumber(int n) {
-    if (numbers.size() >= N) {
+    if (numbers.size() >= _n) {
         throw SpanFullException();
     }
     numbers.insert(n);

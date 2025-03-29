@@ -1,14 +1,14 @@
-#include <algorithm>
 #include <iostream>
 #include <stack>
 #include <list>
+#include <vector>
 
 #include "MutantStack.hpp"
 
 int main() {
     {
-        std::cout << "std::list" << std::endl;
-        std::list<int> l;
+        std::cout << "std::vector" << std::endl;
+        std::vector<int> l;
         l.push_back(5);
         l.push_back(17);
         std::cout << l.back() << std::endl;
@@ -19,15 +19,15 @@ int main() {
         l.push_back(737);
         //[...]
         l.push_back(0);
-        std::list<int>::iterator it = l.begin();
-        std::list<int>::iterator ite = l.end();
+        std::vector<int>::iterator it = l.begin();
+        std::vector<int>::iterator ite = l.end();
         ++it;
         --it;
         while (it != ite) {
             std::cout << *it << std::endl;
             ++it;
         }
-        std::list<int> s(l);
+        std::vector<int> s(l);
     }
     std::cout << std::endl;
     {
@@ -45,14 +45,12 @@ int main() {
         mstack.push(0);
         MutantStack<int>::iterator it = mstack.begin();
         MutantStack<int>::iterator ite = mstack.end();
-        /*
         ++it;
         --it;
         while (it != ite) {
             std::cout << *it << std::endl;
             ++it;
         }
-        */
         std::stack<int> s(mstack);
     }
     return 0;
