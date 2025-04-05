@@ -1,9 +1,14 @@
+#include <algorithm>
 #include <iostream>
-#include <stack>
 #include <list>
+#include <stack>
 #include <vector>
 
 #include "MutantStack.hpp"
+
+void print(int n) {
+    std::cout << n << std::endl;
+}
 
 int main() {
     {
@@ -52,6 +57,21 @@ int main() {
             ++it;
         }
         std::stack<int> s(mstack);
+    }
+    std::cout << std::endl;
+    {
+        MutantStack<int> mstack;
+        for (int i = 0; i < 10; i++) {
+            mstack.push(i);
+        }
+        std::for_each(mstack.begin(), mstack.end(), print);
+        std::cout << "size: " << mstack.size() << std::endl;
+        std::cout << "top: " << mstack.top() << std::endl;
+        for (int i = 0; i < 10; i++) {
+            mstack.pop();
+        }
+        std::cout << "size: " << mstack.size() << std::endl;
+        std::cout << "empty: " << mstack.empty() << std::endl;
     }
     return 0;
 }

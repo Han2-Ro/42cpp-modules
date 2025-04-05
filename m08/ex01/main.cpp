@@ -3,7 +3,7 @@
 
 int main() {
     {
-        Span sp = Span(5);
+        Span sp = Span(7);
         sp.addNumber(2147483647);
         try {
             std::cout << "Shortest span: " << sp.shortestSpan() << std::endl;
@@ -14,7 +14,9 @@ int main() {
         sp.addNumber(20);
         std::cout << "Longest span: " << sp.longestSpan() << std::endl;
         sp.addNumber(10);
-        sp.addNumber(13);
+        sp.addNumber(100);
+        sp.addNumber(10);
+        sp.addNumber(132);
         try {
             sp.addNumber(11);
         } catch (const std::exception& e) {
