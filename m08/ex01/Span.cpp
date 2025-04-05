@@ -65,3 +65,11 @@ void Span::print() {
         std::cout << *it << std::endl;
     }
 }
+
+const char* Span::SpanFullException::what() const throw() {
+    return "Span is full";
+}
+
+const char* Span::NotEnoughNumbersException::what() const throw() {
+    return "Not enough numbers to calculate span";
+}

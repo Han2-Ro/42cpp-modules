@@ -10,15 +10,11 @@ class Span {
    public:
     class SpanFullException : public std::exception {
        public:
-        virtual const char* what() const throw() {
-            return "Span is full";
-        }
+        virtual const char* what() const throw();
     };
     class NotEnoughNumbersException : public std::exception {
        public:
-        virtual const char* what() const throw() {
-            return "Not enough numbers to calculate span";
-        }
+        virtual const char* what() const throw();
     };
     Span();
     Span(unsigned int N);
