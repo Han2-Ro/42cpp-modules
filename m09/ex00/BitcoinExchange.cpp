@@ -63,8 +63,6 @@ bool BitcoinExchange::foreach_row_in_csv(std::string filename, bool (BitcoinExch
                                          std::string second_title, char seperator) {
     std::ifstream fs(filename.c_str());
     std::string   line;
-    std::string   date;
-    std::string   str_value;
     char*         endptr;
 
     if (!fs.is_open()) {
@@ -75,6 +73,8 @@ bool BitcoinExchange::foreach_row_in_csv(std::string filename, bool (BitcoinExch
         return false;
     }
     while (getline(fs, line)) {
+        std::string   date("");
+        std::string   str_value("");
         std::stringstream ss(line);
         std::getline(ss, date, seperator);
         std::getline(ss, str_value, seperator);
