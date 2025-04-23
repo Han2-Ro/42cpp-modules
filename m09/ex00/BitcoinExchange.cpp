@@ -31,11 +31,12 @@ std::string trim(const std::string& str) {
     return str.substr(first, last - first);
 }
 
-bool foreach_row_from_csv() {
+bool BitcoinExchange::add_exchange_rate(std::string date, float rate) {
+    exchange_rates[date] = rate;
     return true;
 }
 
-bool BitcoinExchange::load_data_from_csv(std::string filename) {
+bool BitcoinExchange::foreach_row_from_csv(std::string filename, bool (BitcoinExchange::*func) (std::string, float)) {
     std::ifstream fs(filename.c_str());
     std::string   line;
     std::string   date;
@@ -45,6 +46,9 @@ bool BitcoinExchange::load_data_from_csv(std::string filename) {
     if (!fs.is_open()) {
         return false;
     }
+    // Skip the first line (header)
+    // TODO: validate header
+    getline(fs, line);
     while (getline(fs, line)) {
         std::stringstream ss(line);
         std::getline(ss, date, ',');
@@ -55,8 +59,13 @@ bool BitcoinExchange::load_data_from_csv(std::string filename) {
             std::cout << "failed to convert to float: " << str_exchange_rate << std::endl;
             continue;
         }
-        exchange_rates[date] = f_exchang_rate;
+        (this->*func)(date, f_exchang_rate);
     }
+    return true;
+}
+
+bool BitcoinExchange::load_data_from_csv(std::string filename) {
+    foreach_row_from_csv(filename, &BitcoinExchange::add_exchange_rate);
     std::cout << exchange_rates.at("2019-01-01") << std::endl;
     return true;
 }
