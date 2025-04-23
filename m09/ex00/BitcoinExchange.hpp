@@ -11,8 +11,10 @@
 class BitcoinExchange {
    private:
     std::map<std::string, float> exchange_rates;
-    bool                         add_exchange_rate(std::string date, float rate);
-    bool                         foreach_row_from_csv(std::string filename, bool (BitcoinExchange::*func)(std::string, float));
+
+    bool add_exchange_rate(std::string date, float rate);
+    bool calculate_value(std::string date, float in_value);
+    bool foreach_row_in_csv(std::string filename, bool (BitcoinExchange::*func)(std::string, float), char seperator = ',');
 
    public:
     BitcoinExchange();
@@ -20,4 +22,5 @@ class BitcoinExchange {
     BitcoinExchange& operator=(const BitcoinExchange& other);
     ~BitcoinExchange();
     bool load_data_from_csv(std::string filename);
+    void calculate_all_values(std::string filename);
 };

@@ -36,7 +36,7 @@ bool BitcoinExchange::add_exchange_rate(std::string date, float rate) {
     return true;
 }
 
-bool BitcoinExchange::foreach_row_from_csv(std::string filename, bool (BitcoinExchange::*func) (std::string, float)) {
+bool BitcoinExchange::foreach_row_in_csv(std::string filename, bool (BitcoinExchange::*func)(std::string, float), char seperator) {
     std::ifstream fs(filename.c_str());
     std::string   line;
     std::string   date;
@@ -51,12 +51,15 @@ bool BitcoinExchange::foreach_row_from_csv(std::string filename, bool (BitcoinEx
     getline(fs, line);
     while (getline(fs, line)) {
         std::stringstream ss(line);
-        std::getline(ss, date, ',');
-        std::getline(ss, str_exchange_rate, ',');
+        std::getline(ss, date, seperator);
+        std::getline(ss, str_exchange_rate, seperator);
+        date = trim(date);
+        str_exchange_rate = trim(str_exchange_rate);
         float f_exchang_rate = std::strtof(str_exchange_rate.c_str(), &endptr);
-        //TODO: validation
+        // TODO: validation
         if (*endptr != '\0') {
-            std::cout << "failed to convert to float: " << str_exchange_rate << std::endl;
+            std::cerr << "failed to convert to float: " << str_exchange_rate << std::endl;
+            std::cerr << "Skipping" << std::endl;
             continue;
         }
         (this->*func)(date, f_exchang_rate);
@@ -65,7 +68,16 @@ bool BitcoinExchange::foreach_row_from_csv(std::string filename, bool (BitcoinEx
 }
 
 bool BitcoinExchange::load_data_from_csv(std::string filename) {
-    foreach_row_from_csv(filename, &BitcoinExchange::add_exchange_rate);
+    foreach_row_in_csv(filename, &BitcoinExchange::add_exchange_rate);
     std::cout << exchange_rates.at("2019-01-01") << std::endl;
     return true;
+}
+
+bool BitcoinExchange::calculate_value(std::string date, float in_value) {
+    std::cout << date << ':' << in_value << std::endl;
+    return true;
+}
+
+void BitcoinExchange::calculate_all_values(std::string filename) {
+    foreach_row_in_csv(filename, &BitcoinExchange::calculate_value, '|');
 }
