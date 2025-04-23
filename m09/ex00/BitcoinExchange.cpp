@@ -14,11 +14,11 @@ BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& other) {
 BitcoinExchange::~BitcoinExchange() {}
 
 bool is_valid_date(std::string str_date) {
-    struct tm tm_before{};
+    struct tm tm_before = {};
     strptime(str_date.c_str(), "%Y-%m-%d", &tm_before);
-    std::time_t timestamp = std::mktime(&tm_before); 
-    std::tm tm_after = *std::localtime(&timestamp); 
-    char arr_date_after[11];
+    std::time_t timestamp = std::mktime(&tm_before);
+    std::tm     tm_after = *std::localtime(&timestamp);
+    char        arr_date_after[11];
     std::strftime(arr_date_after, 11, "%Y-%m-%d", &tm_after);
     std::string str_date_after(arr_date_after);
     return str_date == str_date_after;
@@ -41,8 +41,26 @@ bool BitcoinExchange::add_exchange_rate(std::string date, float rate) {
     return true;
 }
 
+bool validate_header(std::ifstream& fs, std::string title1, std::string title2, char seperator) {
+    std::string line;
+    getline(fs, line);
+    std::stringstream ss(line);
+    std::string       str;
+    std::getline(ss, str, seperator);
+    if (trim(str) != title1) {
+        std::cerr << "Error: expected " << title1 << " as column title but got " << str << std::endl;
+        return (false);
+    }
+    std::getline(ss, str, seperator);
+    if (trim(str) != title2) {
+        std::cerr << "Error: expected " << title2 << " as column title but got " << str << std::endl;
+        return (false);
+    }
+    return true;
+}
+
 bool BitcoinExchange::foreach_row_in_csv(std::string filename, bool (BitcoinExchange::*func)(std::string, float),
-                                         char        seperator) {
+                                         std::string second_title, char seperator) {
     std::ifstream fs(filename.c_str());
     std::string   line;
     std::string   date;
@@ -53,9 +71,9 @@ bool BitcoinExchange::foreach_row_in_csv(std::string filename, bool (BitcoinExch
         std::cerr << "Could not open file: " << filename << std::endl;
         return false;
     }
-    // Skip the first line (header)
-    // TODO: validate header
-    getline(fs, line);
+    if (!validate_header(fs, "date", second_title, seperator)) {
+        return false;
+    }
     while (getline(fs, line)) {
         std::stringstream ss(line);
         std::getline(ss, date, seperator);
@@ -80,7 +98,7 @@ bool BitcoinExchange::foreach_row_in_csv(std::string filename, bool (BitcoinExch
 }
 
 bool BitcoinExchange::load_data_from_csv(std::string filename) {
-    return foreach_row_in_csv(filename, &BitcoinExchange::add_exchange_rate);
+    return foreach_row_in_csv(filename, &BitcoinExchange::add_exchange_rate, "exchange_rate");
 }
 
 bool BitcoinExchange::calculate_value(std::string date, float in_value) {
@@ -92,5 +110,5 @@ bool BitcoinExchange::calculate_value(std::string date, float in_value) {
 }
 
 bool BitcoinExchange::calculate_all_values(std::string filename) {
-    return foreach_row_in_csv(filename, &BitcoinExchange::calculate_value, '|');
+    return foreach_row_in_csv(filename, &BitcoinExchange::calculate_value, "value", '|');
 }

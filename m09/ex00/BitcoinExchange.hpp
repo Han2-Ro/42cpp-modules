@@ -1,8 +1,8 @@
 #pragma once
 
 #include <stdlib.h>
-#include <ctime>
 
+#include <ctime>
 #include <fstream>
 #include <iostream>
 #include <map>
@@ -15,7 +15,8 @@ class BitcoinExchange {
 
     bool add_exchange_rate(std::string date, float rate);
     bool calculate_value(std::string date, float in_value);
-    bool foreach_row_in_csv(std::string filename, bool (BitcoinExchange::*func)(std::string, float), char seperator = ',');
+    bool foreach_row_in_csv(std::string filename, bool (BitcoinExchange::*func)(std::string, float),
+                            std::string second_title, char seperator = ',');
 
    public:
     BitcoinExchange();
