@@ -40,7 +40,7 @@ bool BitcoinExchange::foreach_row_in_csv(std::string filename, bool (BitcoinExch
     std::ifstream fs(filename.c_str());
     std::string   line;
     std::string   date;
-    std::string   str_exchange_rate;
+    std::string   str_value;
     char*         endptr;
 
     if (!fs.is_open()) {
@@ -52,17 +52,17 @@ bool BitcoinExchange::foreach_row_in_csv(std::string filename, bool (BitcoinExch
     while (getline(fs, line)) {
         std::stringstream ss(line);
         std::getline(ss, date, seperator);
-        std::getline(ss, str_exchange_rate, seperator);
+        std::getline(ss, str_value, seperator);
         date = trim(date);
-        str_exchange_rate = trim(str_exchange_rate);
-        float f_exchang_rate = std::strtof(str_exchange_rate.c_str(), &endptr);
+        str_value = trim(str_value);
+        float f_value = std::strtof(str_value.c_str(), &endptr);
         // TODO: validation
         if (*endptr != '\0') {
-            std::cerr << "failed to convert to float: " << str_exchange_rate << std::endl;
+            std::cerr << "failed to convert to float: " << str_value << std::endl;
             std::cerr << "Skipping" << std::endl;
             continue;
         }
-        (this->*func)(date, f_exchang_rate);
+        (this->*func)(date, f_value);
     }
     return true;
 }
