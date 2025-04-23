@@ -22,5 +22,5 @@ class BitcoinExchange {
     BitcoinExchange& operator=(const BitcoinExchange& other);
     ~BitcoinExchange();
     bool load_data_from_csv(std::string filename);
-    void calculate_all_values(std::string filename);
+    bool calculate_all_values(std::string filename);
 };

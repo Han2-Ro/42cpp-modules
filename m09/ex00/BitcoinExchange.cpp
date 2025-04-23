@@ -1,23 +1,17 @@
 #include "BitcoinExchange.hpp"
 
-BitcoinExchange::BitcoinExchange() {
-    std::cout << "BitcoinExchange: Default constructor called" << std::endl;
-}
+BitcoinExchange::BitcoinExchange() {}
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange& other) {
-    std::cout << "BitcoinExchange: Copy constructor called" << std::endl;
     *this = other;
 }
 
 BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& other) {
-    std::cout << "BitcoinExchange: Copy assignment operator called" << std::endl;
     this->exchange_rates = other.exchange_rates;
     return *this;
 }
 
-BitcoinExchange::~BitcoinExchange() {
-    std::cout << "BitcoinExchange: Destructor called" << std::endl;
-}
+BitcoinExchange::~BitcoinExchange() {}
 
 std::string trim(const std::string& str) {
     size_t first = 0;
@@ -36,7 +30,8 @@ bool BitcoinExchange::add_exchange_rate(std::string date, float rate) {
     return true;
 }
 
-bool BitcoinExchange::foreach_row_in_csv(std::string filename, bool (BitcoinExchange::*func)(std::string, float), char seperator) {
+bool BitcoinExchange::foreach_row_in_csv(std::string filename, bool (BitcoinExchange::*func)(std::string, float),
+                                         char        seperator) {
     std::ifstream fs(filename.c_str());
     std::string   line;
     std::string   date;
@@ -44,6 +39,7 @@ bool BitcoinExchange::foreach_row_in_csv(std::string filename, bool (BitcoinExch
     char*         endptr;
 
     if (!fs.is_open()) {
+        std::cerr << "Could not open file: " << filename << std::endl;
         return false;
     }
     // Skip the first line (header)
@@ -68,16 +64,17 @@ bool BitcoinExchange::foreach_row_in_csv(std::string filename, bool (BitcoinExch
 }
 
 bool BitcoinExchange::load_data_from_csv(std::string filename) {
-    foreach_row_in_csv(filename, &BitcoinExchange::add_exchange_rate);
-    std::cout << exchange_rates.at("2019-01-01") << std::endl;
-    return true;
+    return foreach_row_in_csv(filename, &BitcoinExchange::add_exchange_rate);
 }
 
 bool BitcoinExchange::calculate_value(std::string date, float in_value) {
     std::cout << date << ':' << in_value << std::endl;
+    float rate = (--exchange_rates.upper_bound(date))->second;
+    float result = in_value * rate;
+    std::cout << "result: " << result << " rate: " << rate << std::endl;
     return true;
 }
 
-void BitcoinExchange::calculate_all_values(std::string filename) {
-    foreach_row_in_csv(filename, &BitcoinExchange::calculate_value, '|');
+bool BitcoinExchange::calculate_all_values(std::string filename) {
+    return foreach_row_in_csv(filename, &BitcoinExchange::calculate_value, '|');
 }
