@@ -13,6 +13,17 @@ BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& other) {
 
 BitcoinExchange::~BitcoinExchange() {}
 
+bool is_valid_date(std::string str_date) {
+    struct tm tm_before{};
+    strptime(str_date.c_str(), "%Y-%m-%d", &tm_before);
+    std::time_t timestamp = std::mktime(&tm_before); 
+    std::tm tm_after = *std::localtime(&timestamp); 
+    char arr_date_after[11];
+    std::strftime(arr_date_after, 11, "%Y-%m-%d", &tm_after);
+    std::string str_date_after(arr_date_after);
+    return str_date == str_date_after;
+}
+
 std::string trim(const std::string& str) {
     size_t first = 0;
     while (first < str.size() && std::isspace(str[first])) {
@@ -50,9 +61,14 @@ bool BitcoinExchange::foreach_row_in_csv(std::string filename, bool (BitcoinExch
         std::getline(ss, date, seperator);
         std::getline(ss, str_value, seperator);
         date = trim(date);
+        if (!is_valid_date(date)) {
+            std::cerr << "Invalid date: " << date << std::endl;
+            std::cerr << "Skipping" << std::endl;
+            continue;
+        }
         str_value = trim(str_value);
         float f_value = std::strtof(str_value.c_str(), &endptr);
-        // TODO: validation
+        // TODO: validation and check empty string
         if (*endptr != '\0') {
             std::cerr << "failed to convert to float: " << str_value << std::endl;
             std::cerr << "Skipping" << std::endl;
