@@ -7,7 +7,7 @@
 int main(int argc, char *argv[]) {
     
     if (argc != 2) {
-        std::cerr << "Expected exactly 1 argument but got: " << argc - 1 << std::endl;
+        std::cerr << "Error: expected exactly 1 argument but got: " << argc - 1 << std::endl;
         return 1;
     }
     BitcoinExchange bitcoinExchange;
