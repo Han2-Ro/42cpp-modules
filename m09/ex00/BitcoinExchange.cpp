@@ -37,6 +37,11 @@ std::string trim(const std::string& str) {
 }
 
 bool BitcoinExchange::add_exchange_rate(std::string date, float rate) {
+    // check if the rate is valid
+    if (rate < 0 || rate > 100000000) {
+        std::cerr << "Error: rate out of range: " << rate << std::endl;
+        return false;
+    }
     exchange_rates[date] = rate;
     return true;
 }
@@ -104,6 +109,13 @@ bool BitcoinExchange::load_data_from_csv(std::string filename) {
 }
 
 bool BitcoinExchange::calculate_value(std::string date, float in_value) {
+    // check if the value is valid
+    if (in_value < 0 || in_value > 1000) {
+        std::cerr << "Error: value out of range: " << in_value << std::endl;
+        return false;
+    }
+
+    // check if the date is valid
     std::map<std::string, float>::iterator iter = exchange_rates.upper_bound(date);
     if (iter == exchange_rates.begin()) {
         std::cerr << "Error: date out of range: " << date << std::endl;
