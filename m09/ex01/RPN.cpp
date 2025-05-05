@@ -22,39 +22,49 @@ int RPN::real_pop() {
     return result;
 }
 
-int RPN::calculate(char* str) {
+void RPN::apply_operator(char symbol) {
     int newest_number;
+    if (values.size() < 2) {
+        std::cerr << "Error: bad inputS: '" << symbol << "'" << std::endl;
+        throw 1;
+    }
+    switch (symbol) {
+        case '+':
+            values.push(this->real_pop() + this->real_pop());
+            break;
+        case '-':
+            newest_number = this->real_pop();
+            values.push(this->real_pop() - newest_number);
+            break;
+        case '*':
+            values.push(this->real_pop() * this->real_pop());
+            break;
+        case '/':
+            newest_number = this->real_pop();
+            values.push(this->real_pop() / newest_number);
+            break;
+
+        default:
+            std::cerr << "Error: bad input: '" << symbol << "'" << std::endl;
+            throw 1;
+            break;
+    }
+}
+
+int RPN::calculate(char* str) {
     for (int i = 0; str[i]; i++) {
         if (str[i] == ' ') {
-            i++;
+            continue;
         }
         if (str[i] >= '0' && str[i] <= '9') {
             values.push(str[i] - '0');
-            continue;
-        }
-        switch (str[i]) {
-            case '+':
-                values.push(this->real_pop() + this->real_pop());
-                break;
-            case '-':
-                newest_number = this->real_pop();
-                values.push(this->real_pop() - newest_number);
-                break;
-            case '*':
-                values.push(this->real_pop() * this->real_pop());
-                break;
-            case '/':
-                newest_number = this->real_pop();
-                values.push(this->real_pop() / newest_number);
-                break;
-
-            default:
-                std::cerr << "Error: bad input: '" << str[i] << "'" << std::endl;
-                break;
+        } else {
+            this->apply_operator(str[i]);
         }
     }
     if (values.size() != 1) {
-        std::cerr << "Error: bad input" << std::endl;
+        std::cerr << "Error: unporcessed values left without operators" << std::endl;
+        throw 1;
     }
     return (values.top());
 }
