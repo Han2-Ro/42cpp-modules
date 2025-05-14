@@ -1,10 +1,16 @@
+#include <algorithm>
 #include <cassert>
 #include <cstdlib>
 #include <iostream>
+#include <iterator>
+#include <random>
 #include <vector>
 
 #include "PmergeMe.hpp"
-unsigned int comparasions_counter = 0;
+unsigned int                    comparasions_counter = 0;
+const std::vector<unsigned int> max_comparisions_bin_insert{
+    0, 0, 1, 3, 5, 8, 11, 14, 17, 21, 25, 29, 33, 37, 41, 45, 49, 54,
+};
 
 void binary_insert(std::vector<unsigned int>& vec, unsigned int n) {
     // exclusive
@@ -14,7 +20,6 @@ void binary_insert(std::vector<unsigned int>& vec, unsigned int n) {
     std::size_t middle = 0;
     while (end - begin > 1) {
         middle = (begin + end) / 2;
-        std::cout << middle << "_";
         comparasions_counter++;
         if (n < vec.at(middle)) {
             end = middle;
@@ -22,20 +27,33 @@ void binary_insert(std::vector<unsigned int>& vec, unsigned int n) {
             begin = middle;
         }
     }
-    // if (vec.size() == 0 || (std::cout << begin << " ", comparasions_counter++, n < vec.at(begin))) {
-    //     vec.insert(vec.begin() + begin, n);
-    // } else {
-    //     vec.insert(vec.begin() + end, n);
-    // }
     vec.insert(vec.begin() + end, n);
-    std::cout << std::endl;
 }
 
-void print_vec(std::vector<unsigned int>& vec) {
+std::vector<unsigned int> sort_bin_insert(std::vector<unsigned int> vec) {
+    std::vector<unsigned int> result;
+    for (std::size_t i = 0; i < vec.size(); i++) {
+        binary_insert(result, vec.at(i));
+    }
+    return result;
+}
+
+void print_vec(const std::vector<unsigned int>& vec) {
     for (auto iter = vec.begin(); iter != vec.end(); iter++) {
         std::cout << *iter << ",";
     }
     std::cout << std::endl;
+}
+
+std::vector<unsigned int> random_vec(std::size_t length) {
+    std::vector<unsigned int> vec;
+    for (unsigned int i = 0; i < length; i++) {
+        vec.push_back(i);
+    }
+    std::random_device rd;
+    std::mt19937       g(rd());
+    std::shuffle(vec.begin(), vec.end(), g);
+    return vec;
 }
 
 bool is_sorted(std::vector<unsigned int> vec) {
@@ -83,9 +101,27 @@ void test_binary_insert() {
     std::cout << "Completed " << __func__ << std::endl;
 }
 
+void test_sort_rand_vec(std::size_t length) {
+    comparasions_counter = 0;
+    auto rand_vec = random_vec(length);
+    // std::cout << "input: ";
+    // print_vec(rand_vec);
+    auto result = sort_bin_insert(rand_vec);
+    // std::cout << "output: ";
+    // print_vec(result);
+    assert(is_sorted(result));
+    // std::cout << "comparasions: " << comparasions_counter << "/" << max_comparisions_bin_insert.at(length) << std::endl;
+    assert(comparasions_counter <= max_comparisions_bin_insert.at(length));
+    std::cout << "Completed " << __func__ << " length: " << length << std::endl;
+}
+
 void run_tests() {
     test_is_sorted();
     test_binary_insert();
+    for (std::size_t i = 0; i < max_comparisions_bin_insert.size(); i++) {
+        test_sort_rand_vec(i);
+        test_sort_rand_vec(i);
+    }
     std::cout << "======= Finished Tests ======= " << std::endl;
 }
 
