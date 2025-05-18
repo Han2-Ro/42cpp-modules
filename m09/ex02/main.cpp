@@ -4,6 +4,7 @@
 #include <iostream>
 #include <iterator>
 #include <random>
+#include <utility>
 #include <vector>
 
 #include "PmergeMe.hpp"
@@ -11,6 +12,62 @@ unsigned int                    comparasions_counter = 0;
 const std::vector<unsigned int> max_comparisions_bin_insert{
     0, 0, 1, 3, 5, 8, 11, 14, 17, 21, 25, 29, 33, 37, 41, 45, 49, 54,
 };
+
+class SortElem {
+   public:
+    virtual unsigned int get_value() const = 0;
+    SortElem() {}
+    virtual SortElem& operator=(const SortElem& other) = 0;
+};
+
+class SortNode : SortElem {
+   public:
+    SortElem& higher;
+    SortElem& lower;
+    SortNode(SortElem& a, SortElem& b): higher(a), lower(b) {
+        comparasions_counter++;
+        if (a.get_value() < b.get_value()) {
+            lower = a;
+            higher = b;
+        }
+    }
+    SortNode(const SortElem& other);
+    SortElem& operator=(const SortElem& other);
+    unsigned int get_value() const {
+        return higher.get_value();
+    }
+};
+
+class SortValue : SortElem {
+    const unsigned int value;
+
+   public:
+    SortValue(unsigned int value) : value(value) {}
+    SortValue(const SortElem& other);
+    SortElem& operator=(const SortElem& other);
+    unsigned int get_value() const {
+        return value;
+    }
+};
+
+template <typename T1, typename T2>
+std::ostream& operator<<(std::ostream& os, const std::pair<T1, T2>& pair) {
+    os << "(" << pair.first << ", " << pair.second << ")";
+    return os;
+}
+
+std::ostream& operator<<(std::ostream& os, const SortElem& elem) {
+    os << elem.get_value();
+}
+
+template <typename T>
+void print_vec(const std::vector<T>& vec) {
+    std::cout << "length: " << vec.size() << std::endl;
+    for (auto iter = vec.begin(); iter != vec.end(); iter++) {
+        std::cout << *iter << ",";
+    }
+    std::cout << std::endl;
+}
 
 void binary_insert(std::vector<unsigned int>& vec, unsigned int n) {
     // exclusive
@@ -38,11 +95,27 @@ std::vector<unsigned int> sort_bin_insert(std::vector<unsigned int> vec) {
     return result;
 }
 
-void print_vec(const std::vector<unsigned int>& vec) {
-    for (auto iter = vec.begin(); iter != vec.end(); iter++) {
-        std::cout << *iter << ",";
+std::vector<SortElem> sort_merge_insert(const std::vector<SortElem>& vec) {
+    std::vector<SortElem> splitted_vec;
+    for (auto iter = vec.begin(); (iter + 1) < vec.end(); iter += 2) {
+        std::pair<unsigned int, sort_elem> pair;
+        if (*iter < *(iter + 1)) {
+            pair.first = *(iter + 1).;
+            pair.second = *(iter + 1);
+        }
+        pair.first = *iter;
+        pair.second = *(iter + 1);
+        comparasions_counter++;
+        if (pair.first < pair.second) {
+            std::swap(pair.first, pair.second);
+        }
+        splitted_vec.push_back(pair);
     }
-    std::cout << std::endl;
+    print_vec(splitted_vec);
+    if (splitted_vec.size() > 1) {
+        sort_merge_insert(splitted_vec);
+    }
+    return vec;
 }
 
 std::vector<unsigned int> random_vec(std::size_t length) {
@@ -110,7 +183,8 @@ void test_sort_rand_vec(std::size_t length) {
     // std::cout << "output: ";
     // print_vec(result);
     assert(is_sorted(result));
-    // std::cout << "comparasions: " << comparasions_counter << "/" << max_comparisions_bin_insert.at(length) << std::endl;
+    // std::cout << "comparasions: " << comparasions_counter << "/" << max_comparisions_bin_insert.at(length) <<
+    // std::endl;
     assert(comparasions_counter <= max_comparisions_bin_insert.at(length));
     std::cout << "Completed " << __func__ << " length: " << length << std::endl;
 }
@@ -128,11 +202,12 @@ void run_tests() {
 int main(int argc, char** argv) {
     run_tests();
     std::vector<unsigned int> vec;
-    comparasions_counter = 0;
     for (int i = 1; i < argc; i++) {
         unsigned int n = std::strtoul(argv[i], nullptr, 10);
-        binary_insert(vec, n);
+        vec.push_back(n);
     }
+    comparasions_counter = 0;
+    sort_merge_insert(vec);
     print_vec(vec);
     std::cout << "comparisions: " << comparasions_counter << std::endl;
 }
