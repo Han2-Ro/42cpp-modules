@@ -17,38 +17,44 @@ class SortElem {
    public:
     virtual unsigned int get_value() const = 0;
     SortElem() {}
-    virtual SortElem& operator=(const SortElem& other) = 0;
+    // virtual SortElem& operator=(const SortElem& other) = 0;
 };
 
-class SortNode : SortElem {
+class SortNode : public SortElem {
    public:
-    SortElem& higher;
-    SortElem& lower;
-    SortNode(SortElem& a, SortElem& b): higher(a), lower(b) {
+    SortElem* higher;
+    SortElem* lower;
+    SortNode(SortElem* a, SortElem* b): higher(a), lower(b) {
         comparasions_counter++;
-        if (a.get_value() < b.get_value()) {
+        // std::cout << "a: " << a.get_value() << " b: " << b.get_value();
+        // std::cout << " a < b: " << (a.get_value() < b.get_value());
+        if (a->get_value() < b->get_value()) {
             lower = a;
             higher = b;
         }
     }
-    SortNode(const SortElem& other);
-    SortElem& operator=(const SortElem& other);
+    // SortNode(const SortElem& other);
+    // SortElem& operator=(const SortElem& other);
     unsigned int get_value() const {
-        return higher.get_value();
+        return higher->get_value();
     }
 };
 
-class SortValue : SortElem {
+class SortValue : public SortElem {
     const unsigned int value;
 
    public:
     SortValue(unsigned int value) : value(value) {}
-    SortValue(const SortElem& other);
-    SortElem& operator=(const SortElem& other);
+    // SortValue(const SortElem& other);
+    // SortElem& operator=(const SortElem& other);
     unsigned int get_value() const {
         return value;
     }
 };
+
+bool operator<(const SortElem& l, const SortElem& r) {
+    return l.get_value() < r.get_value();
+}
 
 template <typename T1, typename T2>
 std::ostream& operator<<(std::ostream& os, const std::pair<T1, T2>& pair) {
@@ -58,13 +64,25 @@ std::ostream& operator<<(std::ostream& os, const std::pair<T1, T2>& pair) {
 
 std::ostream& operator<<(std::ostream& os, const SortElem& elem) {
     os << elem.get_value();
+    return os;
 }
 
 template <typename T>
 void print_vec(const std::vector<T>& vec) {
-    std::cout << "length: " << vec.size() << std::endl;
+    if (vec.size() == 0) {
+        std::cout << "Empty";
+    }
     for (auto iter = vec.begin(); iter != vec.end(); iter++) {
         std::cout << *iter << ",";
+    }
+    std::cout << std::endl;
+}
+
+template <typename T>
+void print_vec(const std::vector<T*>& vec) {
+    std::cout << "length: " << vec.size() << std::endl;
+    for (auto iter = vec.begin(); iter != vec.end(); iter++) {
+        std::cout << **iter << ",";
     }
     std::cout << std::endl;
 }
@@ -95,27 +113,31 @@ std::vector<unsigned int> sort_bin_insert(std::vector<unsigned int> vec) {
     return result;
 }
 
-std::vector<SortElem> sort_merge_insert(const std::vector<SortElem>& vec) {
-    std::vector<SortElem> splitted_vec;
+std::vector<SortElem*> sort_merge_insert(std::vector<SortElem*>& vec) {
+    std::cout << "sorting: ";
+    print_vec(vec);
+    std::vector<SortElem*> splitted_vec;
     for (auto iter = vec.begin(); (iter + 1) < vec.end(); iter += 2) {
-        std::pair<unsigned int, sort_elem> pair;
-        if (*iter < *(iter + 1)) {
-            pair.first = *(iter + 1).;
-            pair.second = *(iter + 1);
-        }
-        pair.first = *iter;
-        pair.second = *(iter + 1);
-        comparasions_counter++;
-        if (pair.first < pair.second) {
-            std::swap(pair.first, pair.second);
-        }
-        splitted_vec.push_back(pair);
+        SortElem* node = new SortNode(*iter, *(iter + 1));
+        splitted_vec.push_back(node);
     }
-    print_vec(splitted_vec);
     if (splitted_vec.size() > 1) {
         sort_merge_insert(splitted_vec);
     }
     return vec;
+}
+
+std::vector<unsigned int> sort_merge_insert(std::vector<unsigned int>& vec) {
+    std::vector<SortElem*> sort_vec;
+    for(unsigned int n : vec) {
+        sort_vec.push_back(new SortValue(n));
+    }
+    sort_vec = sort_merge_insert(sort_vec);
+    std::vector<unsigned int> restult;
+    for(auto iter = sort_vec.begin(); iter != sort_vec.end(); iter++) {
+        restult.push_back((*iter)->get_value());
+    }
+    return restult;
 }
 
 std::vector<unsigned int> random_vec(std::size_t length) {
