@@ -24,7 +24,7 @@ class SortNode : public SortElem {
    public:
     SortElem* higher;
     SortElem* lower;
-    SortNode(SortElem* a, SortElem* b): higher(a), lower(b) {
+    SortNode(SortElem* a, SortElem* b) : higher(a), lower(b) {
         comparasions_counter++;
         // std::cout << "a: " << a.get_value() << " b: " << b.get_value();
         // std::cout << " a < b: " << (a.get_value() < b.get_value());
@@ -63,7 +63,12 @@ std::ostream& operator<<(std::ostream& os, const std::pair<T1, T2>& pair) {
 }
 
 std::ostream& operator<<(std::ostream& os, const SortElem& elem) {
-    os << elem.get_value();
+    const SortNode* node = dynamic_cast<const SortNode*>(&elem);
+    if (node) {
+        os << "(" << *(node->higher) << "," << *(node->lower) << ")";
+    } else {
+        os << elem.get_value();
+    }
     return os;
 }
 
@@ -80,61 +85,79 @@ void print_vec(const std::vector<T>& vec) {
 
 template <typename T>
 void print_vec(const std::vector<T*>& vec) {
-    std::cout << "length: " << vec.size() << std::endl;
+    if (vec.size() == 0) {
+        std::cout << "Empty";
+    }
     for (auto iter = vec.begin(); iter != vec.end(); iter++) {
         std::cout << **iter << ",";
     }
     std::cout << std::endl;
 }
 
-void binary_insert(std::vector<unsigned int>& vec, unsigned int n) {
-    // exclusive
-    std::size_t begin = -1;
-    // exclusive
-    std::size_t end = vec.size();
+// Begin and end are exclusive
+void binary_insert(std::vector<SortElem*>& vec, SortElem* item, std::size_t begin, std::size_t end) {
+    std::cout << "Inserting: " << item->get_value() << std::endl;
     std::size_t middle = 0;
     while (end - begin > 1) {
         middle = (begin + end) / 2;
         comparasions_counter++;
-        if (n < vec.at(middle)) {
+        if (*item < *vec.at(middle)) {
             end = middle;
         } else {
             begin = middle;
         }
     }
-    vec.insert(vec.begin() + end, n);
+    vec.insert(vec.begin() + end, item);
 }
 
-std::vector<unsigned int> sort_bin_insert(std::vector<unsigned int> vec) {
-    std::vector<unsigned int> result;
-    for (std::size_t i = 0; i < vec.size(); i++) {
-        binary_insert(result, vec.at(i));
-    }
-    return result;
+void binary_insert(std::vector<SortElem*>& vec, SortElem* item) {
+    binary_insert(vec, item, -1, vec.size());
 }
+
+// std::vector<unsigned int> sort_bin_insert(std::vector<unsigned int> vec) {
+//     std::vector<unsigned int> result;
+//     for (std::size_t i = 0; i < vec.size(); i++) {
+//         binary_insert(result, vec.at(i));
+//     }
+//     return result;
+// }
 
 std::vector<SortElem*> sort_merge_insert(std::vector<SortElem*>& vec) {
     std::cout << "sorting: ";
     print_vec(vec);
-    std::vector<SortElem*> splitted_vec;
+
+    std::vector<SortNode*> splitted_vec;
     for (auto iter = vec.begin(); (iter + 1) < vec.end(); iter += 2) {
-        SortElem* node = new SortNode(*iter, *(iter + 1));
+        SortNode* node = new SortNode(*iter, *(iter + 1));
         splitted_vec.push_back(node);
     }
+
+    std::vector<SortElem*> half_sorted_vec;
     if (splitted_vec.size() > 1) {
-        sort_merge_insert(splitted_vec);
+        std::vector<SortElem*> casted_vec(splitted_vec.begin(), splitted_vec.end());
+        half_sorted_vec = sort_merge_insert(casted_vec);
     }
-    return vec;
+
+    std::vector<SortElem*> result;
+    for (auto iter = half_sorted_vec.begin(); iter < half_sorted_vec.end(); iter++) {
+        result.push_back(dynamic_cast<SortNode*>(*iter)->higher);
+    }
+    for (auto iter = splitted_vec.begin(); iter < splitted_vec.end(); iter++) {
+        binary_insert(result, dynamic_cast<SortNode*>(*iter)->lower);
+    }
+    std::cout << "result: ";
+    print_vec(result);
+    return result;
 }
 
 std::vector<unsigned int> sort_merge_insert(std::vector<unsigned int>& vec) {
     std::vector<SortElem*> sort_vec;
-    for(unsigned int n : vec) {
+    for (unsigned int n : vec) {
         sort_vec.push_back(new SortValue(n));
     }
     sort_vec = sort_merge_insert(sort_vec);
     std::vector<unsigned int> restult;
-    for(auto iter = sort_vec.begin(); iter != sort_vec.end(); iter++) {
+    for (auto iter = sort_vec.begin(); iter != sort_vec.end(); iter++) {
         restult.push_back((*iter)->get_value());
     }
     return restult;
@@ -186,6 +209,7 @@ void test_is_sorted() {
     std::cout << "Completed " << __func__ << std::endl;
 }
 
+/*
 void test_binary_insert() {
     std::vector<unsigned int> vec;
     vec.push_back(45);
@@ -210,14 +234,15 @@ void test_sort_rand_vec(std::size_t length) {
     assert(comparasions_counter <= max_comparisions_bin_insert.at(length));
     std::cout << "Completed " << __func__ << " length: " << length << std::endl;
 }
+*/
 
 void run_tests() {
     test_is_sorted();
-    test_binary_insert();
-    for (std::size_t i = 0; i < max_comparisions_bin_insert.size(); i++) {
-        test_sort_rand_vec(i);
-        test_sort_rand_vec(i);
-    }
+    // test_binary_insert();
+    // for (std::size_t i = 0; i < max_comparisions_bin_insert.size(); i++) {
+    //     test_sort_rand_vec(i);
+    //     test_sort_rand_vec(i);
+    // }
     std::cout << "======= Finished Tests ======= " << std::endl;
 }
 
