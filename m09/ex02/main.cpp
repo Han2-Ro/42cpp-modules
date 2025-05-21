@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <cassert>
+#include <cmath>
 #include <cstdlib>
 #include <iostream>
 #include <iterator>
@@ -11,6 +12,10 @@
 unsigned int                    comparasions_counter = 0;
 const std::vector<unsigned int> max_comparisions_bin_insert{
     0, 0, 1, 3, 5, 8, 11, 14, 17, 21, 25, 29, 33, 37, 41, 45, 49, 54,
+};
+const std::vector<unsigned int> max_comparisions_merge_insert{
+    0,  0,  1,  3,  5,  7,  10, 13, 16, 19, 22, 26,  30,  34,  38,  42,  46,
+    50, 54, 58, 62, 66, 71, 76, 81, 86, 91, 91, 101, 106, 111, 116, 121, 126,
 };
 
 class SortElem {
@@ -97,6 +102,9 @@ void print_vec(const std::vector<T*>& vec) {
 // Begin and end are exclusive
 void binary_insert(std::vector<SortElem*>& vec, SortElem* item, std::size_t begin, std::size_t end) {
     // std::cout << "Inserting: " << item->get_value() << std::endl;
+    if (end > vec.size()) {
+        end = vec.size();
+    }
     std::size_t middle = 0;
     while (end - begin > 1) {
         middle = (begin + end) / 2;
@@ -115,8 +123,8 @@ void binary_insert(std::vector<SortElem*>& vec, SortElem* item) {
 }
 
 std::vector<SortElem*> sort_merge_insert(std::vector<SortElem*>& input) {
-    // std::cout << "sorting: ";
-    // print_vec(input);
+    std::cout << "sorting: ";
+    print_vec(input);
     if (input.size() <= 1) {
         return input;
     }
@@ -133,14 +141,30 @@ std::vector<SortElem*> sort_merge_insert(std::vector<SortElem*>& input) {
     for (auto iter = sorted_pairs.begin(); iter < sorted_pairs.end(); iter++) {
         result.push_back(dynamic_cast<SortNode*>(*iter)->higher);
     }
-    for (auto iter = pairs.begin(); iter < pairs.end(); iter++) {
-        binary_insert(result, dynamic_cast<SortNode*>(*iter)->lower);
+    unsigned long t = 1;
+    unsigned long previous_t = 0;
+    std::cout << "Inserting: ";
+    for (unsigned int k = 1; t <= sorted_pairs.size(); k++) {
+        t = std::pow(2, k) - t;
+        std::cout << "t:" << t << ", ";
+        for (unsigned long i = t; i > previous_t; i--) {
+            if (i > sorted_pairs.size()) {
+                i = sorted_pairs.size();
+            }
+            if (i <= previous_t) {
+                break;
+            }
+            std::cout << i << ", ";
+            binary_insert(result, dynamic_cast<SortNode*>(sorted_pairs.at(i - 1))->lower, -1, std::pow(2, k) - 1);
+        }
+        previous_t = t;
     }
     if (input.size() % 2 == 1) {
         binary_insert(result, input.back());
     }
-    // std::cout << "result: ";
-    // print_vec(result);
+    std::cout << std::endl;
+    std::cout << "result: ";
+    print_vec(result);
     return result;
 }
 
@@ -223,17 +247,15 @@ void test_sort_rand_vec(std::size_t length) {
     print_vec(result);
     assert(result.size() == length);
     assert(is_sorted(result));
-    std::cout << "comparasions: " << comparasions_counter << "/" << max_comparisions_bin_insert.at(length) << std::endl;
-    //Todo: assert max for mergre insert
-    // assert(comparasions_counter <= max_comparisions_bin_insert.at(length));
+    std::cout << "comparasions: " << comparasions_counter << "/" << max_comparisions_merge_insert.at(length) << std::endl;
+    // assert(comparasions_counter <= max_comparisions_merge_insert.at(length));
     std::cout << "Completed " << __func__ << " length: " << length << std::endl;
 }
 
 void run_tests() {
     test_is_sorted();
     // test_binary_insert();
-    for (std::size_t i = 0; i < max_comparisions_bin_insert.size(); i++) {
-        test_sort_rand_vec(i);
+    for (std::size_t i = 0; i < max_comparisions_merge_insert.size(); i++) {
         test_sort_rand_vec(i);
     }
     std::cout << "======= Finished Tests ======= " << std::endl;
