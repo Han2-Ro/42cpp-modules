@@ -248,43 +248,31 @@ void test_is_sorted() {
     std::cout << "Completed " << __func__ << std::endl;
 }
 
-// void test_binary_insert() {
-//     std::vector<unsigned int> vec;
-//     vec.push_back(45);
-//     vec.push_back(832);
-//     binary_insert(vec, 400);
-//     print_vec(vec);
-//     assert(is_sorted(vec));
-//     std::cout << "Completed " << __func__ << std::endl;
-// }
-
-void test_sort_rand_vec(std::size_t length) {
+void test_sort_vec(std::vector<unsigned int> input) {
     comparasions_counter = 0;
-    auto rand_vec = random_vec(length);
     std::cout << "input: ";
-    print_vec(rand_vec);
-    auto result = sort_merge_insert(rand_vec);
+    print_vec(input);
+    auto result = sort_merge_insert(input);
     std::cout << "output: ";
     print_vec(result);
-    assert(result.size() == length);
+    assert(result.size() == input.size());
     assert(is_sorted(result));
-    if (length < max_comparisions_merge_insert.size()) {
-        std::cout << "comparasions: " << comparasions_counter << "/" << max_comparisions_merge_insert.at(length)
+    if (input.size() < max_comparisions_merge_insert.size()) {
+        std::cout << "comparasions: " << comparasions_counter << "/" << max_comparisions_merge_insert.at(input.size())
                   << std::endl;
-        assert(comparasions_counter <= max_comparisions_merge_insert.at(length));
+        assert(comparasions_counter <= max_comparisions_merge_insert.at(input.size()));
     } else {
         std::cout << "comparasions: " << comparasions_counter << std::endl;
     }
-    std::cout << "====== Completed " << __func__ << " length: " << length << " ======" << std::endl;
+    std::cout << "====== Completed " << __func__ << " length: " << input.size() << " ======" << std::endl;
 }
 
 void run_tests() {
     test_is_sorted();
-    // test_binary_insert();
     for (std::size_t i = 0; i < max_comparisions_merge_insert.size(); i++) {
-        test_sort_rand_vec(i);
+        test_sort_vec(random_vec(i));
     }
-    test_sort_rand_vec(3000);
+    test_sort_vec(random_vec(3000));
     std::cout << "======= Finished Tests ======= " << std::endl;
 }
 
