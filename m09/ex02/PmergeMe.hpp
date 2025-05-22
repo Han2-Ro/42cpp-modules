@@ -1,13 +1,28 @@
 #pragma once
+#include <iostream>
+#include <vector>
 
-class PmergeMe {
-   private:
-    int data_;
+extern unsigned int       comparasions_counter;
+std::vector<unsigned int> sort_merge_insert(std::vector<unsigned int>& vec);
 
-   public:
-    PmergeMe();
-    PmergeMe(const PmergeMe& other);
-    PmergeMe& operator=(const PmergeMe& other);
-    ~PmergeMe();
-};
+template <typename T>
+void print_vec(const std::vector<T>& vec) {
+    if (vec.size() == 0) {
+        std::cout << "Empty";
+    }
+    for (auto iter = vec.begin(); iter != vec.end(); iter++) {
+        std::cout << *iter << ",";
+    }
+    std::cout << std::endl;
+}
 
+template <typename T>
+void print_vec(const std::vector<T*>& vec) {
+    if (vec.size() == 0) {
+        std::cout << "Empty";
+    }
+    for (auto iter = vec.begin(); iter != vec.end(); iter++) {
+        std::cout << **iter << ",";
+    }
+    std::cout << std::endl;
+}
