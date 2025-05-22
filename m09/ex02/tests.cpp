@@ -89,3 +89,7 @@ void run_tests() {
     test_sort_vec(random_vec(3000));
     std::cout << "======= Finished Tests ======= " << std::endl;
 }
+
+int main() {
+    run_tests();
+}
