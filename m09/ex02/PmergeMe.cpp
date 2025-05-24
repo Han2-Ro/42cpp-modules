@@ -9,6 +9,7 @@ class SortElem {
    public:
     virtual unsigned int get_value() const = 0;
     SortElem() {}
+    virtual ~SortElem() {}
     // virtual SortElem& operator=(const SortElem& other) = 0;
     const virtual SortElem* get_higher() const = 0;
     const virtual SortElem* get_lower() const = 0;
@@ -148,18 +149,24 @@ std::vector<const SortElem*> sort_merge_insert(std::vector<const SortElem*>& inp
     // std::cout << std::endl;
     // std::cout << "result: ";
     // print_vec(result);
+    for (auto iter = pairs.begin(); iter < pairs.end(); iter++) {
+        delete *iter;
+    }
     return result;
 }
 
-std::vector<unsigned int> sort_merge_insert(std::vector<unsigned int>& vec) {
-    std::vector<const SortElem*> sort_vec;
-    for (unsigned int n : vec) {
-        sort_vec.push_back(new SortValue(n));
+std::vector<unsigned int> sort_merge_insert(std::vector<unsigned int>& input) {
+    std::vector<const SortElem*> vec_to_sort;
+    for (unsigned int n : input) {
+        vec_to_sort.push_back(new SortValue(n));
     }
-    sort_vec = sort_merge_insert(sort_vec);
+    std::vector<const SortElem*> sorted_vector = sort_merge_insert(vec_to_sort);
     std::vector<unsigned int> restult;
-    for (auto iter = sort_vec.begin(); iter != sort_vec.end(); iter++) {
+    for (auto iter = sorted_vector.begin(); iter != sorted_vector.end(); iter++) {
         restult.push_back((*iter)->get_value());
+    }
+    for (auto iter = vec_to_sort.begin(); iter != vec_to_sort.end(); iter++) {
+        delete *iter;
     }
     return restult;
 }

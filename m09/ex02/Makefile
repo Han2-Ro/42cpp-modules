@@ -1,7 +1,7 @@
 NAME = PmergeMe
 SRCS = main.cpp PmergeMe.cpp
 
-tests:
-	$(CXX) tests.cpp PmergeMe.cpp -o tests
-
 include ../common.mk
+
+tests: tests.o PmergeMe.o
+	$(CXX) tests.o PmergeMe.o -o tests
