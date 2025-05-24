@@ -81,7 +81,7 @@ std::ostream& operator<<(std::ostream& os, const SortElem& elem) {
 }
 
 // Begin and end are exclusive
-void binary_insert(std::vector<const SortElem*>& vec, const SortElem* item, long begin, long end) {
+void binary_insert(Container<const SortElem*>& vec, const SortElem* item, long begin, long end) {
     // std::cout << "Bin Inserting: begin:" << begin << " end: " << end << std::endl;
     if (end > static_cast<long>(vec.size())) {
         end = vec.size();
@@ -100,26 +100,26 @@ void binary_insert(std::vector<const SortElem*>& vec, const SortElem* item, long
     vec.insert(vec.begin() + end, item);
 }
 
-void binary_insert(std::vector<const SortElem*>& vec, const SortElem* item) {
+void binary_insert(Container<const SortElem*>& vec, const SortElem* item) {
     binary_insert(vec, item, -1, vec.size());
 }
 
-std::vector<const SortElem*> sort_merge_insert(std::vector<const SortElem*>& input) {
+Container<const SortElem*> sort_merge_insert(Container<const SortElem*>& input) {
     // std::cout << "sorting: ";
     // print_vec(input);
     if (input.size() <= 1) {
         return input;
     }
 
-    std::vector<const SortElem*> pairs;
+    Container<const SortElem*> pairs;
     for (auto iter = input.begin(); (iter + 1) < input.end(); iter += 2) {
         SortNode* node = new SortNode(*iter, *(iter + 1));
         pairs.push_back(node);
     }
 
-    std::vector<const SortElem*> sorted_pairs = sort_merge_insert(pairs);
+    Container<const SortElem*> sorted_pairs = sort_merge_insert(pairs);
 
-    std::vector<const SortElem*> result;
+    Container<const SortElem*> result;
     for (auto iter = sorted_pairs.begin(); iter < sorted_pairs.end(); iter++) {
         result.push_back((*iter)->get_higher());
     }
@@ -155,13 +155,13 @@ std::vector<const SortElem*> sort_merge_insert(std::vector<const SortElem*>& inp
     return result;
 }
 
-std::vector<unsigned int> sort_merge_insert(std::vector<unsigned int>& input) {
-    std::vector<const SortElem*> vec_to_sort;
+Container<unsigned int> sort_merge_insert(Container<unsigned int>& input) {
+    Container<const SortElem*> vec_to_sort;
     for (unsigned int n : input) {
         vec_to_sort.push_back(new SortValue(n));
     }
-    std::vector<const SortElem*> sorted_vector = sort_merge_insert(vec_to_sort);
-    std::vector<unsigned int> restult;
+    Container<const SortElem*> sorted_vector = sort_merge_insert(vec_to_sort);
+    Container<unsigned int> restult;
     for (auto iter = sorted_vector.begin(); iter != sorted_vector.end(); iter++) {
         restult.push_back((*iter)->get_value());
     }

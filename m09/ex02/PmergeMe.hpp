@@ -2,11 +2,13 @@
 #include <iostream>
 #include <vector>
 
+#include "Container.hpp"
+
 extern unsigned int       comparasions_counter;
-std::vector<unsigned int> sort_merge_insert(std::vector<unsigned int>& vec);
+Container<unsigned int> sort_merge_insert(Container<unsigned int>& vec);
 
 template <typename T>
-void print_vec(const std::vector<T>& vec) {
+void print_vec(const Container<T>& vec) {
     if (vec.size() == 0) {
         std::cout << "Empty";
     }
@@ -17,7 +19,7 @@ void print_vec(const std::vector<T>& vec) {
 }
 
 template <typename T>
-void print_vec(const std::vector<T*>& vec) {
+void print_vec(const Container<T*>& vec) {
     if (vec.size() == 0) {
         std::cout << "Empty";
     }
