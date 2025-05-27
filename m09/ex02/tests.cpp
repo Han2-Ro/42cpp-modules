@@ -65,10 +65,18 @@ void test_is_sorted() {
 void test_sort_vec(std::vector<unsigned int> input) {
     comparasions_counter = 0;
     std::cout << "input: ";
-    print_vec(input);
+    if (input.size() < 100) {
+        print_vec(input);
+    } else {
+        std::cout << " length: " << input.size() << std::endl;
+    }
     auto result = sort_merge_insert(input);
     std::cout << "output: ";
-    print_vec(result);
+    if (input.size() < 100) {
+        print_vec(result);
+    } else {
+        std::cout << " length: " << input.size() << std::endl;
+    }
     assert(result.size() == input.size());
     assert(is_sorted(result));
     if (input.size() < max_comparisions_merge_insert.size()) {
@@ -86,7 +94,9 @@ void run_tests() {
     for (std::size_t i = 0; i < max_comparisions_merge_insert.size(); i++) {
         test_sort_vec(random_vec(i));
     }
-    test_sort_vec(random_vec(3000));
+    for (int i = 0; i < 100; i++) {
+        test_sort_vec(random_vec(10000));
+    }
     std::cout << "======= Finished Tests ======= " << std::endl;
 }
 
