@@ -104,7 +104,7 @@ void binary_insert(std::vector<const SortElem*>& vec, const SortElem* item) {
     binary_insert(vec, item, -1, vec.size());
 }
 
-std::vector<const SortElem*> sort_merge_insert(std::vector<const SortElem*>& input) {
+std::vector<const SortElem*>& sort_merge_insert(std::vector<const SortElem*>& input) {
     // std::cout << "sorting: ";
     // print_vec(input);
     if (input.size() <= 1) {
@@ -117,32 +117,32 @@ std::vector<const SortElem*> sort_merge_insert(std::vector<const SortElem*>& inp
         pairs.push_back(node);
     }
 
-    std::vector<const SortElem*> sorted_pairs = sort_merge_insert(pairs);
-
-    std::vector<const SortElem*> result;
-    for (auto iter = sorted_pairs.begin(); iter < sorted_pairs.end(); iter++) {
-        result.push_back((*iter)->get_higher());
-    }
+    pairs = sort_merge_insert(pairs);
     if (input.size() % 2 == 1) {
-        sorted_pairs.push_back(input.back());
+        pairs.push_back(input.back());
     }
-    result.insert(result.begin(), sorted_pairs.front()->get_lower());
+
+    input.clear();
+    for (auto iter = pairs.begin(); iter < pairs.end(); iter++) {
+        input.push_back((*iter)->get_higher());
+    }
+    input.insert(input.begin(), pairs.front()->get_lower());
     unsigned long t = 1;
     unsigned long previous_t = 1;
     // std::cout << "Inserting: ";
-    for (unsigned int k = 2; t <= sorted_pairs.size(); k++) {
+    for (unsigned int k = 2; t <= pairs.size(); k++) {
         t = std::pow(2, k) - t;
         // std::cout << "t:" << t << ", ";
         for (unsigned long i = t; i > previous_t; i--) {
-            if (i > sorted_pairs.size()) {
-                i = sorted_pairs.size();
+            if (i > pairs.size()) {
+                i = pairs.size();
             }
             if (i <= previous_t) {
                 break;
             }
             // std::cout << i << ", ";
             // the formulas work for index 1 being the first index so I do -1 here, because vector has 0 as first index
-            binary_insert(result, sorted_pairs.at(i - 1)->get_lower(), -1, std::pow(2, k) - 1);
+            binary_insert(input, pairs.at(i - 1)->get_lower(), -1, std::pow(2, k) - 1);
         }
         previous_t = t;
     }
@@ -152,7 +152,7 @@ std::vector<const SortElem*> sort_merge_insert(std::vector<const SortElem*>& inp
     for (auto iter = pairs.begin(); iter < pairs.end(); iter++) {
         delete *iter;
     }
-    return result;
+    return input;
 }
 
 std::vector<unsigned int> sort_merge_insert(std::vector<unsigned int>& input) {
