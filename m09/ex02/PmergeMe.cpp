@@ -5,60 +5,6 @@
 
 unsigned int              comparasions_counter = 0;
 
-class SortElem {
-   public:
-    virtual unsigned int get_value() const = 0;
-    SortElem() {}
-    virtual ~SortElem() {}
-    // virtual SortElem& operator=(const SortElem& other) = 0;
-    const virtual SortElem* get_higher() const = 0;
-    const virtual SortElem* get_lower() const = 0;
-};
-
-class SortNode : public SortElem {
-   private:
-    const SortElem* higher;
-    const SortElem* lower;
-
-   public:
-    SortNode(const SortElem* a, const SortElem* b) : higher(a), lower(b) {
-        comparasions_counter++;
-        // std::cout << "comp: " << a->get_value() << ", " << b->get_value() << std::endl;
-        if (a->get_value() < b->get_value()) {
-            lower = a;
-            higher = b;
-        }
-    }
-    // SortNode(const SortElem& other);
-    // SortElem& operator=(const SortElem& other);
-    unsigned int get_value() const {
-        return higher->get_value();
-    }
-    const SortElem* get_higher() const {
-        return this->higher;
-    }
-    const SortElem* get_lower() const {
-        return this->lower;
-    }
-};
-
-class SortValue : public SortElem {
-    const unsigned int value;
-
-   public:
-    SortValue(unsigned int value) : value(value) {}
-    // SortValue(const SortElem& other);
-    // SortElem& operator=(const SortElem& other);
-    unsigned int get_value() const {
-        return value;
-    }
-    const SortElem* get_higher() const {
-        return this;
-    }
-    const SortElem* get_lower() const {
-        return this;
-    }
-};
 
 bool operator<(const SortElem& l, const SortElem& r) {
     return l.get_value() < r.get_value();

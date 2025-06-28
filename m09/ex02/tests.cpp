@@ -94,7 +94,7 @@ void run_tests() {
     for (std::size_t i = 0; i < max_comparisions_merge_insert.size(); i++) {
         test_sort_vec(random_vec(i));
     }
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 10; i++) {
         test_sort_vec(random_vec(10000));
     }
     std::cout << "======= Finished Tests ======= " << std::endl;

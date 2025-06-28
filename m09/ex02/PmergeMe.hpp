@@ -1,6 +1,9 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include "SortElem.hpp"
+#include "SortNode.hpp"
+#include "SortValue.hpp"
 
 extern unsigned int       comparasions_counter;
 std::vector<unsigned int> sort_merge_insert(std::vector<unsigned int>& vec);

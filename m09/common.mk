@@ -14,7 +14,7 @@ clean:
 	rm -f $(OBJS)
 
 fclean: clean
-	rm -f $(NAME) tests
+	rm -f $(NAME) tests tests.o
 
 re: fclean all
 
