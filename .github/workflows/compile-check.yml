@@ -18,16 +18,14 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y build-essential
     
-    - name: check c++ version
+    - name: Set clang++ as c++
       run: |
-        c++ --version
-        ls -la $(which c++)
-        clang++ --version
-        ls -la $(which clang++)
+        sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++ 100
+        sudo update-alternatives --set c++ /usr/bin/clang++
+
 
     - name: Find and test all Makefiles
       run: |
-        ln -f /usr/bin/clang++ /usr/bin/c++
         # Find all directories containing Makefiles
         find . -name "Makefile" -type f -print0 | while IFS= read -r -d '' makefile; do
           echo "Testing Makefile in $(dirname "$makefile")"
