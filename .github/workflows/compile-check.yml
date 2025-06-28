@@ -19,7 +19,10 @@ jobs:
         sudo apt-get install -y build-essential
     
     - name: check c++ version
-      run: c++ --version
+      run: |
+        c++ --version
+        ls -la $(which c++)
+        clang++ --version
 
     - name: Find and test all Makefiles
       run: |
