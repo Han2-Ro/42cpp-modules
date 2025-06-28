@@ -48,7 +48,7 @@ std::vector<const SortElem*> sort_merge_insert(std::vector<const SortElem*>& inp
     }
 
     std::vector<const SortElem*> pairs;
-    for (auto iter = input.begin(); (iter + 1) < input.end(); iter += 2) {
+    for (std::vector<const SortElem*>::iterator iter = input.begin(); (iter + 1) < input.end(); iter += 2) {
         SortNode* node = new SortNode(*iter, *(iter + 1));
         pairs.push_back(node);
     }
@@ -56,7 +56,7 @@ std::vector<const SortElem*> sort_merge_insert(std::vector<const SortElem*>& inp
     std::vector<const SortElem*> sorted_pairs = sort_merge_insert(pairs);
 
     std::vector<const SortElem*> result;
-    for (auto iter = sorted_pairs.begin(); iter < sorted_pairs.end(); iter++) {
+    for (std::vector<const SortElem*>::iterator iter = sorted_pairs.begin(); iter < sorted_pairs.end(); iter++) {
         result.push_back((*iter)->get_higher());
     }
     if (input.size() % 2 == 1) {
@@ -85,7 +85,7 @@ std::vector<const SortElem*> sort_merge_insert(std::vector<const SortElem*>& inp
     // std::cout << std::endl;
     // std::cout << "result: ";
     // print_vec(result);
-    for (auto iter = pairs.begin(); iter < pairs.end(); iter++) {
+    for (std::vector<const SortElem*>::iterator iter = pairs.begin(); iter < pairs.end(); iter++) {
         delete *iter;
     }
     return result;
@@ -93,15 +93,15 @@ std::vector<const SortElem*> sort_merge_insert(std::vector<const SortElem*>& inp
 
 std::vector<unsigned int> sort_merge_insert(std::vector<unsigned int>& input) {
     std::vector<const SortElem*> vec_to_sort;
-    for (unsigned int n : input) {
-        vec_to_sort.push_back(new SortValue(n));
+    for (std::vector<unsigned int>::iterator iter = input.begin(); iter != input.end(); iter++) {
+        vec_to_sort.push_back(new SortValue(*iter));
     }
     std::vector<const SortElem*> sorted_vector = sort_merge_insert(vec_to_sort);
     std::vector<unsigned int> restult;
-    for (auto iter = sorted_vector.begin(); iter != sorted_vector.end(); iter++) {
+    for (std::vector<const SortElem*>::iterator iter = sorted_vector.begin(); iter != sorted_vector.end(); iter++) {
         restult.push_back((*iter)->get_value());
     }
-    for (auto iter = vec_to_sort.begin(); iter != vec_to_sort.end(); iter++) {
+    for (std::vector<const SortElem*>::iterator iter = vec_to_sort.begin(); iter != vec_to_sort.end(); iter++) {
         delete *iter;
     }
     return restult;

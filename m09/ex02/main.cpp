@@ -1,12 +1,12 @@
 #include <iostream>
 #include <iterator>
-#include <utility>
+#include <cstdlib>
 
 #include "PmergeMe.hpp"
 int main(int argc, char** argv) {
     std::vector<unsigned int> vec;
     for (int i = 1; i < argc; i++) {
-        unsigned int n = std::strtoul(argv[i], nullptr, 10);
+        unsigned int n = std::strtoul(argv[i], NULL, 10);
         vec.push_back(n);
     }
     comparasions_counter = 0;

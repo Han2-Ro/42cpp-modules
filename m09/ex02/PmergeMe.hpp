@@ -13,7 +13,7 @@ void print_vec(const std::vector<T>& vec) {
     if (vec.size() == 0) {
         std::cout << "Empty";
     }
-    for (auto iter = vec.begin(); iter != vec.end(); iter++) {
+    for (typename std::vector<T>::const_iterator iter = vec.begin(); iter != vec.end(); iter++) {
         std::cout << *iter << ",";
     }
     std::cout << std::endl;
@@ -24,7 +24,7 @@ void print_vec(const std::vector<T*>& vec) {
     if (vec.size() == 0) {
         std::cout << "Empty";
     }
-    for (auto iter = vec.begin(); iter != vec.end(); iter++) {
+    for (typename std::vector<T*>::const_iterator iter = vec.begin(); iter != vec.end(); iter++) {
         std::cout << **iter << ",";
     }
     std::cout << std::endl;
