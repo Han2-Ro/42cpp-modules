@@ -2,7 +2,7 @@ NAME = PmergeMe
 COMMEN_SRCS = PmergeMe.cpp SortNode.cpp SortValue.cpp SortElem.cpp
 SRCS = main.cpp $(COMMEN_SRCS)
 TEST_SRCS = tests.cpp $(COMMEN_SRCS)
-CXX = c++
+CXX = clang++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 OBJS = $(SRCS:.cpp=.o)
 TEST_OBJS = $(TEST_SRCS:.cpp=.o)
