@@ -9,8 +9,11 @@ SortNode::SortNode(const SortElem* a, const SortElem* b) : higher(a), lower(b) {
         higher = b;
     }
 }
-// SortNode(const SortElem& other);
-// SortElem& operator=(const SortElem& other);
+SortNode::SortNode(const SortNode& other): higher(other.higher), lower(other.lower) {}
+SortNode& SortNode::operator=(const SortNode& other) {
+    (void) other;
+    return *this;
+}
 unsigned int SortNode::get_value() const {
     return higher->get_value();
 }

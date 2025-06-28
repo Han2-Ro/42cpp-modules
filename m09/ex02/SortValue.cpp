@@ -1,8 +1,11 @@
 #include "SortValue.hpp"
 
 SortValue::SortValue(unsigned int value) : value(value) {}
-// SortValue(const SortElem& other);
-// SortElem& operator=(const SortElem& other);
+SortValue::SortValue(const SortValue& other) : value(other.value) {}
+SortValue& SortValue::operator=(const SortValue& other) {
+    (void) other;
+    return *this;
+}
 unsigned int SortValue::get_value() const {
     return value;
 }

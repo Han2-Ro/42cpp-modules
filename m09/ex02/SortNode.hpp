@@ -8,8 +8,8 @@ class SortNode : public SortElem {
 
    public:
     SortNode(const SortElem* a, const SortElem* b);
-    // SortNode(const SortElem& other);
-    // SortElem& operator=(const SortElem& other);
+    SortNode(const SortNode& other);
+    SortNode& operator=(const SortNode& other);
     unsigned int get_value() const;
     const SortElem* get_higher() const;
     const SortElem* get_lower() const;

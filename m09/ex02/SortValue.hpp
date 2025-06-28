@@ -7,8 +7,8 @@ class SortValue : public SortElem {
 
    public:
     SortValue(unsigned int value);
-    // SortValue(const SortElem& other);
-    // SortElem& operator=(const SortElem& other);
+    SortValue(const SortValue& other);
+    SortValue& operator=(const SortValue& other);
     unsigned int get_value() const;
     const SortElem* get_higher() const;
     const SortElem* get_lower() const;

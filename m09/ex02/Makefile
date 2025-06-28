@@ -1,7 +1,30 @@
 NAME = PmergeMe
-SRCS = main.cpp PmergeMe.cpp SortNode.cpp SortValue.cpp
+COMMEN_SRCS = PmergeMe.cpp SortNode.cpp SortValue.cpp SortElem.cpp
+SRCS = main.cpp $(COMMEN_SRCS)
+TEST_SRCS = tests.cpp $(COMMEN_SRCS)
+CXX = c++
+CXXFLAGS = -Wall -Wextra -Werror -g #-std=c++98
+OBJS = $(SRCS:.cpp=.o)
+TEST_OBJS = $(TEST_SRCS:.cpp=.o)
 
-include ../common.mk
+all: $(NAME)
 
-tests: tests.o PmergeMe.o SortNode.o SortValue.o
-	$(CXX) tests.o PmergeMe.o SortNode.o SortValue.o -o tests
+$(NAME): $(OBJS)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+clean:
+	rm -f $(OBJS)
+
+fclean: clean
+	rm -f $(NAME) tests tests.o
+
+re: fclean all
+
+
+tests: $(TEST_OBJS)
+	$(CXX) $(TEST_OBJS) -o tests
+
+.PHONY: all clean fclean re tests

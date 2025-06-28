@@ -16,16 +16,6 @@ std::ostream& operator<<(std::ostream& os, const std::pair<T1, T2>& pair) {
     return os;
 }
 
-std::ostream& operator<<(std::ostream& os, const SortElem& elem) {
-    const SortNode* node = dynamic_cast<const SortNode*>(&elem);
-    if (node) {
-        os << "(" << *(node->get_higher()) << "," << *(node->get_lower()) << ")";
-    } else {
-        os << elem.get_value();
-    }
-    return os;
-}
-
 // Begin and end are exclusive
 void binary_insert(std::vector<const SortElem*>& vec, const SortElem* item, long begin, long end) {
     // std::cout << "Bin Inserting: begin:" << begin << " end: " << end << std::endl;

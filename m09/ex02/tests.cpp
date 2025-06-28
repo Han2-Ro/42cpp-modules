@@ -89,6 +89,17 @@ void test_sort_vec(std::vector<unsigned int> input) {
     std::cout << "====== Completed " << __func__ << " length: " << input.size() << " ======" << std::endl;
 }
 
+std::ostream& operator<<(std::ostream& os, const SortElem& elem) {
+    const SortNode* node = dynamic_cast<const SortNode*>(&elem);
+    if (node) {
+        os << "(" << *(node->get_higher()) << "," << *(node->get_lower()) << ")";
+    } else {
+        os << elem.get_value();
+    }
+    return os;
+}
+
+
 void run_tests() {
     test_is_sorted();
     for (std::size_t i = 0; i < max_comparisions_merge_insert.size(); i++) {
@@ -102,4 +113,9 @@ void run_tests() {
 
 int main() {
     run_tests();
+    SortValue a(1);
+    SortValue b(a);
+    SortValue c(2);
+    c = a;
+    std::cout << a << b << c << std::endl;
 }
