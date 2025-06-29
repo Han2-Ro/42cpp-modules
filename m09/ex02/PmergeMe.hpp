@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 #include "SortElem.hpp"
 #include "SortNode.hpp"
@@ -30,3 +31,5 @@ void print_vec(const std::vector<T*>& vec) {
     }
     std::cout << std::endl;
 }
+
+#include "PmergeMe.tpp"
