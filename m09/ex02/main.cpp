@@ -1,8 +1,8 @@
-#include <iostream>
-#include <iterator>
 #include <cstdlib>
+#include <iostream>
 
 #include "PmergeMe.hpp"
+
 int main(int argc, char** argv) {
     std::vector<unsigned int> vec;
     for (int i = 1; i < argc; i++) {
