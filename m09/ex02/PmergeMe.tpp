@@ -31,7 +31,7 @@ void binary_insert(Container& vec, const SortElem* item) {
 }
 
 template <typename Container>
-Container sort_merge_insert_algo(Container& input) {
+Container sort_merge_insert(Container& input) {
     if (input.size() <= 1) {
         return input;
     }
@@ -42,7 +42,7 @@ Container sort_merge_insert_algo(Container& input) {
         pairs.push_back(node);
     }
 
-    Container sorted_pairs = sort_merge_insert_algo(pairs);
+    Container sorted_pairs = sort_merge_insert(pairs);
 
     Container result;
     for (typename Container::iterator iter = sorted_pairs.begin(); iter < sorted_pairs.end(); iter++) {
@@ -73,21 +73,4 @@ Container sort_merge_insert_algo(Container& input) {
         delete *iter;
     }
     return result;
-}
-
-template <typename Container>
-Container sort_merge_insert(Container& input) {
-    Container vec_to_sort;
-    for (typename Container::iterator iter = input.begin(); iter != input.end(); iter++) {
-        vec_to_sort.push_back(new SortValue(*iter));
-    }
-    Container sorted_vector = sort_merge_insert_algo(vec_to_sort);
-    Container restult;
-    for (typename Container::iterator iter = sorted_vector.begin(); iter != sorted_vector.end(); iter++) {
-        restult.push_back((*iter)->get_value());
-    }
-    for (typename Container::iterator iter = vec_to_sort.begin(); iter != vec_to_sort.end(); iter++) {
-        delete *iter;
-    }
-    return restult;
 }

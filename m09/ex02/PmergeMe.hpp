@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <deque>
 #include <cmath>
 
 #include "SortElem.hpp"
@@ -8,7 +9,8 @@
 #include "SortValue.hpp"
 
 extern unsigned int       comparasions_counter;
-std::vector<unsigned int> sort_merge_insert(std::vector<unsigned int>& vec);
+std::vector<unsigned int> sort_vector(std::vector<unsigned int>& vec);
+std::deque<unsigned int> sort_deque(std::deque<unsigned int>& vec);
 
 template <typename Container>
 void print_vec(const Container& vec) {

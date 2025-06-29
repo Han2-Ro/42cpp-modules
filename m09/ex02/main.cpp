@@ -17,7 +17,7 @@ int main(int argc, char** argv) {
     }
     comparasions_counter = 0;
     print_vec(dq);
-    vec = sort_merge_insert(vec);
-    print_vec(vec);
+    dq = sort_deque(dq);
+    print_vec(dq);
     std::cout << "comparisions: " << comparasions_counter << std::endl;
 }

@@ -70,7 +70,7 @@ void test_sort_vec(std::vector<unsigned int> input) {
     } else {
         std::cout << " length: " << input.size() << std::endl;
     }
-    auto result = sort_merge_insert(input);
+    auto result = sort_vector(input);
     std::cout << "output: ";
     if (input.size() < 100) {
         print_vec(result);
