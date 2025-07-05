@@ -23,15 +23,4 @@ void print_vec(const Container& vec) {
     std::cout << std::endl;
 }
 
-template <typename T>
-void print_vec(const std::vector<T*>& vec) {
-    if (vec.size() == 0) {
-        std::cout << "Empty";
-    }
-    for (typename std::vector<T*>::const_iterator iter = vec.begin(); iter != vec.end(); iter++) {
-        std::cout << **iter << ",";
-    }
-    std::cout << std::endl;
-}
-
 #include "PmergeMe.tpp"
