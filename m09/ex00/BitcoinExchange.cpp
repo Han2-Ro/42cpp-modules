@@ -94,7 +94,6 @@ bool BitcoinExchange::foreach_row_in_csv(std::string filename, bool (BitcoinExch
             continue;
         }
         float f_value = std::strtof(str_value.c_str(), &endptr);
-        // TODO: validation and check empty string
         if (*endptr != '\0') {
             std::cerr << "Error: failed to convert to float: " << str_value << std::endl;
             continue;

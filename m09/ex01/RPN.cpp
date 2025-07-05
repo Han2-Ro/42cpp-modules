@@ -25,7 +25,7 @@ int RPN::real_pop() {
 void RPN::apply_operator(char symbol) {
     int newest_number;
     if (values.size() < 2) {
-        std::cerr << "Error: bad inputS: '" << symbol << "'" << std::endl;
+        std::cerr << "Error: bad input: '" << symbol << "'" << std::endl;
         throw 1;
     }
     switch (symbol) {

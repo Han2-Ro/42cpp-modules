@@ -1,6 +1,5 @@
 #pragma once
 #include <stack>
-#include <format>
 #include <string>
 
 class RPN {
