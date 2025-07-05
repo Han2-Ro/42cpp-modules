@@ -26,16 +26,16 @@ Container argv_to_container(int argc, char** argv) {
     for (int i = 1; i < argc; i++) {
         if (std::strchr(argv[i], '-') != NULL) {
             std::cerr << "Error: negative numbers not allowed: '" << argv[i] << "'" << std::endl;
-            exit(1);
+            throw 1;
         }
         unsigned int n = std::strtoul(argv[i], &endptr, 10);
         if (errno == ERANGE) {
             std::cerr << "Error: number out of range: '" << argv[i] << "'" << std::endl;
-            exit(1);
+            throw 1;
         }
         if (*endptr != '\0' || argv[i][0] == '\0') {
             std::cerr << "Error: failed to convert to unsigned long: '" << argv[i] << "'" << std::endl;
-            exit(1);
+            throw 1;
         }
         result.push_back(n);
     }
@@ -43,7 +43,13 @@ Container argv_to_container(int argc, char** argv) {
 }
 
 int main(int argc, char** argv) {
-    std::vector<unsigned int> vec = argv_to_container<std::vector<unsigned int> >(argc, argv);
+    std::vector<unsigned int> vec;
+    try {
+        vec = argv_to_container<std::vector<unsigned int> >(argc, argv);
+    }
+    catch (int error_code) {
+        return (error_code);
+    }
 
     clock_t                   start_time = clock();
     std::vector<unsigned int> result = sort_vector(vec);
@@ -54,7 +60,13 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    std::deque<unsigned int> dq = argv_to_container<std::deque<unsigned int> >(argc, argv);
+    std::deque<unsigned int> dq;
+    try {
+        dq = argv_to_container<std::deque<unsigned int> >(argc, argv);
+    }
+    catch (int error_code) {
+        return (error_code);
+    }
 
     start_time = clock();
     dq = sort_deque(dq);
