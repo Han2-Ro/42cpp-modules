@@ -18,7 +18,7 @@ void print_vec(const Container& vec) {
         std::cout << "Empty";
     }
     for (typename Container::const_iterator iter = vec.begin(); iter != vec.end(); iter++) {
-        std::cout << *iter << ",";
+        std::cout << *iter << " ";
     }
     std::cout << std::endl;
 }

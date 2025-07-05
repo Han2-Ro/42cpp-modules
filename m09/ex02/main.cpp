@@ -18,8 +18,14 @@ bool is_sorted(Container vec) {
 
 int main(int argc, char** argv) {
     std::vector<unsigned int> input;
+    char *endptr;
+
     for (int i = 1; i < argc; i++) {
-        unsigned int n = std::strtoul(argv[i], NULL, 10);
+        unsigned int n = std::strtoul(argv[i], &endptr, 10);
+        if (*endptr != '\0' || argv[i][0] == '\0') {
+            std::cerr << "Error: failed to convert to unsigned long: '" << argv[i] << "'" << std::endl;
+            return 1;
+        }
         input.push_back(n);
     }
 
@@ -49,11 +55,11 @@ int main(int argc, char** argv) {
 
     std::cout << "Before: ";
     print_vec(input);
-    std::cout << "After: ";
+    std::cout << "After:  ";
     print_vec(result);
 
-    std::cout << "Time to process a range of " << input.size() << " elements with std::vector : " << std::fixed
+    std::cout << "Time to process a range of " << input.size() << " elements with std::vector: " << std::fixed
               << vector_time << " us" << std::endl;
-    std::cout << "Time to process a range of " << input.size() << " elements with std::deque : " << std::fixed
+    std::cout << "Time to process a range of " << input.size() << " elements with std::deque: " << std::fixed
               << deque_time << " us" << std::endl;
 }
