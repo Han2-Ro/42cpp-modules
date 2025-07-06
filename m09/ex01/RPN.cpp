@@ -41,6 +41,10 @@ void RPN::apply_operator(char symbol) {
             break;
         case '/':
             newest_number = this->real_pop();
+            if (newest_number == 0) {
+                std::cerr << "Error: division by zero" << std::endl;
+                throw 1;
+            }
             values.push(this->real_pop() / newest_number);
             break;
 

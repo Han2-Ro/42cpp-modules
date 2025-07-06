@@ -1,4 +1,5 @@
 #include <iostream>
+#include <exception>
 
 #include "RPN.hpp"
 
