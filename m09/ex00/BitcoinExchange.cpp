@@ -48,7 +48,7 @@ bool BitcoinExchange::add_exchange_rate(std::string date, float rate) {
 
 bool validate_header(std::ifstream& fs, std::string title1, std::string title2, char seperator) {
     std::string line;
-    getline(fs, line);
+    std::getline(fs, line);
     std::stringstream ss(line);
     std::string       str;
     std::getline(ss, str, seperator);
@@ -77,7 +77,7 @@ bool BitcoinExchange::foreach_row_in_csv(std::string filename, bool (BitcoinExch
     if (!validate_header(fs, "date", second_title, seperator)) {
         return false;
     }
-    while (getline(fs, line)) {
+    while (std::getline(fs, line)) {
         std::string   date("");
         std::string   str_value("");
         std::stringstream ss(line);
