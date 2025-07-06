@@ -1,7 +1,7 @@
-
 #include "RPN.hpp"
 
 #include <iostream>
+#include <limits>
 
 RPN::RPN() {}
 
@@ -23,30 +23,54 @@ int RPN::real_pop() {
 }
 
 void RPN::apply_operator(char symbol) {
-    int newest_number;
     if (values.size() < 2) {
         std::cerr << "Error: bad input: '" << symbol << "'" << std::endl;
         throw 1;
     }
     switch (symbol) {
-        case '+':
-            values.push(this->real_pop() + this->real_pop());
-            break;
-        case '-':
-            newest_number = this->real_pop();
-            values.push(this->real_pop() - newest_number);
-            break;
-        case '*':
-            values.push(this->real_pop() * this->real_pop());
-            break;
-        case '/':
-            newest_number = this->real_pop();
-            if (newest_number == 0) {
+        case '+': {
+            int b = this->real_pop();
+            int a = this->real_pop();
+            if ((b > 0 && a > std::numeric_limits<int>::max() - b) ||
+                (b < 0 && a < std::numeric_limits<int>::min() - b)) {
+                std::cerr << "Error: integer overflow in addition" << std::endl;
+                throw 1;
+            }
+            values.push(a + b);
+        } break;
+        case '-': {
+            int b = this->real_pop();
+            int a = this->real_pop();
+            if ((b < 0 && a > std::numeric_limits<int>::max() + b) ||
+                (b > 0 && a < std::numeric_limits<int>::min() + b)) {
+                std::cerr << "Error: integer overflow in subtraction" << std::endl;
+                throw 1;
+            }
+            values.push(a - b);
+        } break;
+        case '*': {
+            int b = this->real_pop();
+            int a = this->real_pop();
+            int product = a * b;
+            if (a != 0 && product / a != b) {
+                std::cerr << "Error: integer overflow in multiplication" << std::endl;
+                throw 1;
+            }
+            values.push(product);
+        } break;
+        case '/': {
+            int b = this->real_pop();
+            if (b == 0) {
                 std::cerr << "Error: division by zero" << std::endl;
                 throw 1;
             }
-            values.push(this->real_pop() / newest_number);
-            break;
+            int a = this->real_pop();
+            if (a == std::numeric_limits<int>::min() && b == -1) {
+                std::cerr << "Error: integer overflow in division" << std::endl;
+                throw 1;
+            }
+            values.push(a / b);
+        } break;
 
         default:
             std::cerr << "Error: bad input: '" << symbol << "'" << std::endl;
