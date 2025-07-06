@@ -100,6 +100,10 @@ bool BitcoinExchange::foreach_row_in_csv(std::string filename, bool (BitcoinExch
         }
         (this->*func)(date, f_value);
     }
+    if (fs.bad()) {
+        std::cerr << "Error: during file reading" << std::endl;
+        return false;
+    }
     return true;
 }
 
