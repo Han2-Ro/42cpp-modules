@@ -69,6 +69,7 @@ bool BitcoinExchange::foreach_row_in_csv(std::string filename, bool (BitcoinExch
     std::ifstream fs(filename.c_str());
     std::string   line;
     char*         endptr;
+    bool          empty_data = true;
 
     if (!fs.is_open()) {
         std::cerr << "Error: could not open file: " << filename << std::endl;
@@ -78,6 +79,7 @@ bool BitcoinExchange::foreach_row_in_csv(std::string filename, bool (BitcoinExch
         return false;
     }
     while (std::getline(fs, line)) {
+        empty_data = false;
         std::string   date("");
         std::string   str_value("");
         std::stringstream ss(line);
@@ -102,6 +104,10 @@ bool BitcoinExchange::foreach_row_in_csv(std::string filename, bool (BitcoinExch
     }
     if (fs.bad()) {
         std::cerr << "Error: during file reading" << std::endl;
+        return false;
+    }
+    if (empty_data) {
+        std::cerr << "Error: no data rows found in '" << filename << "'" << std::endl;
         return false;
     }
     return true;
