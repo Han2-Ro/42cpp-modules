@@ -13,5 +13,7 @@ int main(int argc, char **argv) {
         std::cout << rpn.calculate(argv[1]) << std::endl;
     } catch (const int e) {
         return e;
+    } catch (std::bad_alloc e) {
+        std::cout << "Error: " << e.what() << std::endl;
     }
 }

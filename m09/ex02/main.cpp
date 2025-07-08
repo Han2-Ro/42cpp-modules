@@ -43,16 +43,24 @@ Container argv_to_container(int argc, char** argv) {
 }
 
 int main(int argc, char** argv) {
+    // sort with vector
     std::vector<unsigned int> vec;
     try {
         vec = argv_to_container<std::vector<unsigned int> >(argc, argv);
     }
     catch (int error_code) {
         return (error_code);
+    } catch (std::bad_alloc e) {
+        std::cout << "Error: " << e.what() << std::endl;
     }
 
+    std::vector<unsigned int> result;
     clock_t                   start_time = clock();
-    std::vector<unsigned int> result = sort_vector(vec);
+    try {
+        result = sort_vector(vec);
+    } catch (std::bad_alloc e) {
+        std::cout << "Error: " << e.what() << std::endl;
+    }
     clock_t                   end_time = clock();
     double                    vector_time = static_cast<double>(end_time - start_time) / CLOCKS_PER_SEC * 1000000;
 
@@ -60,16 +68,23 @@ int main(int argc, char** argv) {
         return 1;
     }
 
+    // sort with deque
     std::deque<unsigned int> dq;
     try {
         dq = argv_to_container<std::deque<unsigned int> >(argc, argv);
     }
     catch (int error_code) {
         return (error_code);
+    } catch (std::bad_alloc e) {
+        std::cout << "Error: " << e.what() << std::endl;
     }
 
     start_time = clock();
-    dq = sort_deque(dq);
+    try {
+        dq = sort_deque(dq);
+    } catch (std::bad_alloc e) {
+        std::cout << "Error: " << e.what() << std::endl;
+    }
     end_time = clock();
     double deque_time = static_cast<double>(end_time - start_time) / CLOCKS_PER_SEC * 1000000;
 
@@ -77,6 +92,7 @@ int main(int argc, char** argv) {
         return 1;
     }
 
+    // print results
     std::cout << "Before: ";
     print_vec(vec);
     std::cout << "After:  ";
