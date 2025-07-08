@@ -86,6 +86,10 @@ void test_sort_vec(std::vector<unsigned int> input) {
     } else {
         std::cout << "comparasions: " << comparasions_counter << std::endl;
     }
+    std::sort(input.begin(), input.end());
+    for(int i = 0; i < input.size(); i++) {
+        assert(input[i] == result[i]);
+    }
     std::cout << "====== Completed " << __func__ << " length: " << input.size() << " ======" << std::endl;
 }
 

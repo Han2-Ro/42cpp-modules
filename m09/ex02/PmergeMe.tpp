@@ -48,24 +48,28 @@ Container sort_merge_insert(Container& input) {
     for (typename Container::iterator iter = sorted_pairs.begin(); iter < sorted_pairs.end(); iter++) {
         result.push_back((*iter)->get_higher());
     }
-    if (input.size() % 2 == 1) {
-        sorted_pairs.push_back(input.back());
+    Container lower_elems;
+    for (typename Container::iterator iter = sorted_pairs.begin(); iter < sorted_pairs.end(); iter++) {
+        lower_elems.push_back((*iter)->get_lower());
     }
-    result.insert(result.begin(), sorted_pairs.front()->get_lower());
+    if (input.size() % 2 == 1) {
+        lower_elems.push_back(input.back());
+    }
+    result.insert(result.begin(), lower_elems.front());
     unsigned long t = 1;
     unsigned long previous_t = 1;
-    for (unsigned int k = 2; t <= sorted_pairs.size(); k++) {
+    for (unsigned int k = 2; t <= lower_elems.size(); k++) {
         t = std::pow(2, k) - t;
         for (unsigned long i = t; i > previous_t; i--) {
-            if (i > sorted_pairs.size()) {
-                i = sorted_pairs.size();
+            if (i > lower_elems.size()) {
+                i = lower_elems.size();
             }
             if (i <= previous_t) {
                 break;
             }
             // the formulas work for index 1 being the first index so I do -1 here,
             // because vector has 0 as first index
-            binary_insert(result, sorted_pairs.at(i - 1)->get_lower(), -1, std::pow(2, k) - 1);
+            binary_insert(result, lower_elems.at(i - 1), -1, std::pow(2, k) - 1);
         }
         previous_t = t;
     }
